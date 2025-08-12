@@ -1,11 +1,26 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
 @import "tailwindcss";
 @import 'flowbite';
-@import "tailwindcss/preflight";
+/* @import "tailwindcss/preflight"; */
 @tailwind utilities;
 @import "flyonui/variants.css";
 @plugin "flyonui";
+
+@keyframes shine {
+    0% {
+        background-position: 0% 100%;
+        /* bottom left */
+    }
+
+    100% {
+        background-position: 200% 0%;
+        /* top right */
+    }
+}
+
+.animate-shine {
+    background: linear-gradient(45deg, #ffc400, #fff3c4, #ffc400);
+    background-size: 200% 200%;
+    animation: shine 3s ease-in-out infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

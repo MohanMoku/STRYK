@@ -1,24 +1,79 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import { persistReducer, persistStore } from 'redux-persist';
 
 // Step 1: Create the slice
-const counterSlice = createSlice({
-    name: 'counter',
-    initialState: { value: 0 },
+const userSlice = createSlice({
+    name: 'user',
+    initialState: {
+        currentUser: null,
+        loading: false,
+        error: false,
+    },
     reducers: {
-        increment: (state) => { state.value += 1 },
-        decrement: (state) => { state.value -= 1 },
-        reset: (state) => { state.value = 0 },
+        signInStart: (state) => {
+            state.loading = true;
+        },
+        signInSuccess: (state, action) => {
+            state.currentUser = action.payload;
+            state.loading = false;
+            state.error = false;
+        },
+        signInFailure: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        },
+        updateUserStart: (state) => {
+            state.loading = true;
+        },
+        updateUserSuccess: (state, action) => {
+            state.currentUser = action.payload;
+            state.loading = false;
+            state.error = false;
+        },
+        updateUserFailure: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        },
+        signOut: (state) => {
+            state.currentUser = null;
+            state.loading = false;
+            state.error = false;
+        },
     },
 });
 
-// Step 2: Export actions
-export const { increment, decrement, reset } = counterSlice.actions;
+export const {
+    signInStart,
+    signInSuccess,
+    signInFailure,
+    updateUserStart,
+    updateUserSuccess,
+    updateUserFailure,
+    signOut
+} = userSlice.actions;
 
-// Step 3: Create and export store
+// Step 2: Redux Persist config
+const persistConfig = {
+    key: 'root',
+    storage,
+};
+
+// Step 3: Wrap reducer with persistReducer
+const persistedReducer = persistReducer(persistConfig, userSlice.reducer);
+
+// Step 4: Create store
 const store = configureStore({
     reducer: {
-        counter: counterSlice.reducer,
+        user: persistedReducer,
     },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false,
+        }),
 });
+
+// Step 5: Create persistor
+export const persistor = persistStore(store);
 
 export default store;
