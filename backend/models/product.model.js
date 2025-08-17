@@ -16,6 +16,7 @@ const reviewSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 const productSchema = new mongoose.Schema({
+
     name: {
         type: String,
         required: true,
@@ -27,23 +28,28 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    stock: {
-        type: Number,
-        default: 0
-    },
     category: {
         type: String,
         enum: ["Jersey", "Shorts", "Socks", "Boots", "Ball", "Gloves", "Accessory"],
         required: true
     },
     team: String,
-    size: {
-        type: String,
-        enum: ["XS", "S", "M", "L", "XL", "XXL"]
+    stock: {
+        XS: { type: Number, default: 0 },
+        S: { type: Number, default: 0 },
+        M: { type: Number, default: 0 },
+        L: { type: Number, default: 0 },
+        XL: { type: Number, default: 0 },
+        XXL: { type: Number, default: 0 },
     },
-    color: String,
-    material: String,
-    brand: String,
+    offer: {
+        type: Number,
+        default: 0
+    },
+    year: {
+        type: String,
+        default: 0
+    },
     weight: String,
     images: [String],
 
@@ -57,8 +63,6 @@ const productSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-
-    // Reviews & Ratings
     reviews: [reviewSchema],
     averageRating: {
         type: Number,

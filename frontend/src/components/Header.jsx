@@ -1,10 +1,44 @@
+import { useEffect } from "react";
 import { FaPowerOff } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { updateUserFailure, updateUserStart, updateUserSuccess } from "../app/store";
 
 export default function Header() {
 
+    const dispatch = useDispatch();
+
     const currentUser = useSelector((state) => state.user.currentUser);
+
+    useEffect(() => {
+
+        const fetchUser = async () => {
+
+            try {
+
+                dispatch(updateUserStart())
+
+                const res = await fetch(`/api/users/user?id=${currentUser._id}`)
+
+                const data = await res.json()
+
+                const user = data.user
+
+                dispatch(updateUserSuccess(user))
+
+            } catch (error) {
+                dispatch(updateUserFailure(currentUser))
+                console.log(error);
+            }
+
+        }
+
+        if (currentUser) {
+            fetchUser()
+        }
+
+
+    }, [])
 
     return (
         <header className="h-16 flex justify-between items-center px-6 m-2 rounded-2xl bg-gray-800">

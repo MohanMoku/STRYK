@@ -1,6 +1,7 @@
 import bcryptjs from 'bcryptjs';
 import User from "../models/user.model.js"
 import jwt from "jsonwebtoken"
+import { errorHandler } from '../utils/error.js';
 
 export const google = async (req, res, next) => {
 
@@ -64,7 +65,7 @@ export const google = async (req, res, next) => {
                 .json(rest);
         }
     } catch (error) {
-        next(error);
+        next(errorHandler(500, error));
     }
 };
 

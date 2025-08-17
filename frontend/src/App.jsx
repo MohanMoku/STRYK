@@ -10,6 +10,7 @@ import About from "./pages/About"
 import ProfilePage from "./pages/ProfilePage"
 import NotFound from "./pages/NotFound";
 import PrivateRoute from "./components/PrivateRoute";
+import Product from "./pages/Product";
 
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/product/:id" element={<Product />} />
           <Route path="/search" element={<Search />} />
           <Route element={<PrivateRoute />}>
             <Route path="/cart" element={<Cart />} />

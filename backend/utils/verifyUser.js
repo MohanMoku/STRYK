@@ -6,15 +6,10 @@ export const verifyToken = (req, res, next) => {
     const token = req.cookies.token_check;
 
     if (!token) return next(errorHandler(403, "User Not authenticated"))
-    // .status(403)
-    // .json({ error: "User Not authenticated" })
 
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-        if (err) return next(errorHandler(401, err))
-        // .status(401)
-        // .json({ error: err })
-
-        req.user = user;
+        if (err) return next(errorHandler(401, err));
+        req.user = user
         next();
     });
 }

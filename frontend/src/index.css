@@ -6,21 +6,94 @@
 @plugin "flyonui";
 
 @keyframes shine {
-    0% {
-        background-position: 0% 100%;
-        /* bottom left */
-    }
+  0% {
+    background-position: 0% 100%;
+    /* bottom left */
+  }
 
-    100% {
-        background-position: 200% 0%;
-        /* top right */
-    }
+  100% {
+    background-position: 200% 0%;
+    /* top right */
+  }
 }
 
 .animate-shine {
-    background: linear-gradient(45deg, #ffc400, #fff3c4, #ffc400);
-    background-size: 200% 200%;
-    animation: shine 3s ease-in-out infinite;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  background: linear-gradient(45deg, #ffc400, #fff3c4, #ffc400);
+  background-size: 200% 200%;
+  animation: shine 3s ease-in-out infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+/* Quill tool  */
+/* Toolbar background */
+.ql-toolbar {
+  background-color: #ffffff;
+  border: 2px solid #000000;
+}
+
+/* Toolbar icons */
+.ql-toolbar button,
+.ql-toolbar .ql-picker {
+  color: #ffffff;
+}
+
+/* Icon hover */
+.ql-toolbar button:hover,
+.ql-toolbar .ql-picker:hover {
+  color: #000000;
+}
+
+/* Selected option in dropdown */
+.ql-picker-item.ql-selected {
+  color: #000000;
+}
+
+/* Editor background */
+.ql-container {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.scroll-hidden {
+  -ms-overflow-style: none;
+  /* for Internet Explorer and Edge */
+  scrollbar-width: none;
+  /* for Firefox */
+}
+
+.scroll-hidden::-webkit-scrollbar {
+  display: none;
+  /* for Chrome, Safari, and Opera */
+}
+
+.prose ol,
+.prose ul {
+  margin-left: 1.5rem;
+  /* spacing from text */
+  padding-left: 1.5rem;
+  /* indent bullets/numbers */
+}
+
+.prose ol {
+  list-style-type: decimal;
+  /* show numbers */
+}
+
+.prose ul {
+  list-style-type: disc;
+  /* show bullets */
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+  /* spacing between items */
 }

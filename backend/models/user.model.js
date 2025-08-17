@@ -11,6 +11,9 @@ const userSchema = new mongoose.Schema({
         unique: true,
         lowercase: true
     },
+    dob: {
+        type: String,
+    },
     password: {
         type: String,
         required: true
@@ -27,7 +30,10 @@ const userSchema = new mongoose.Schema({
     address: {
         type: String,
     },
-    phone: {
+    phone1: {
+        type: String,
+    },
+    phone2:{
         type: String,
     },
 

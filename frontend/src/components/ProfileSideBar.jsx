@@ -9,20 +9,23 @@ import { MdAddToPhotos } from "react-icons/md";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../app/store";
+import { useState } from "react";
 
 export default function ProfileSideBar() {
 
     const navigate = useNavigate();
-
+    const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
     const signout = async () => {
 
         try {
+            setLoading(true)
             await fetch('/api/auth/signout')
-            navigate('/');
+            setLoading(false)
+            navigate('/')
             dispatch(signOut());
-
         } catch (error) {
+            setLoading(false)
             console.log(error);
         }
 
@@ -31,7 +34,8 @@ export default function ProfileSideBar() {
     const { role } = useSelector(state => state.user.currentUser);
 
     return (
-        <div className="h-full flex justify-between flex-col items-center p-5">
+
+        <div className="h-auto flex justify- flex-col items-center p-5">
             <div className="flex items-center flex-col gap-5">
                 <NavLink to="/profile/user" className={({ isActive }) =>
                     `btn w-55 ${!isActive ? "btn-outline" : "btn-gradient btn-secondary"}`
@@ -61,11 +65,18 @@ export default function ProfileSideBar() {
                         }><MdAddToPhotos className="text-yellow-600" /> Add Products</NavLink>
                     </>
                 }
-            </div>
-            <div>
-                <button className="btn btn-gradient w-45 btn-error" onClick={signout}
+                <button className="btn btn-gradient w-55 btn-error" onClick={signout}
                 >Log out</button>
             </div>
+
+            {
+                loading && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
+                        <Spinner color="success" aria-label="Loading" size="xl" />
+                    </div>
+                )
+            }
+
         </div>
     )
 }

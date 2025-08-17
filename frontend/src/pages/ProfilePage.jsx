@@ -12,13 +12,14 @@ import AuthRoute from "../components/AuthRoute"
 import AllOrders from "../components/ProfileComponents/AllOrders"
 
 export default function ProfilePage() {
+
     return (
-        <div className="flex min-h-full px-2 gap-2">
-            <div className="flex-1/5">
+        <div className="flex h-full px-2 gap-2 overflow-clip">
+            <div className="flex-1/5 overflow-auto">
                 <ProfileSideBar />
             </div>
 
-            <div className="flex-4/5">
+            <div className="flex-4/5 h-auto overflow-auto">
                 <Routes>
                     <Route path="/user" element={<Profile />} />
                     <Route path="/edit-profile" element={<EditDetails />} />
@@ -33,7 +34,6 @@ export default function ProfilePage() {
                     </Route>
                 </Routes>
             </div>
-
         </div>
     )
 }

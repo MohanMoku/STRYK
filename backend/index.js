@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import connectDB from "./db/index.js";
 import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js"
+import productRoutes from "./routes/product.route.js"
 import { errorMiddleware } from "./middleware/error.middleware.js";
 import { verifyIsAdmin } from "./utils/verifyAdmin.js";
 
@@ -22,6 +23,7 @@ app.get('/api/',verifyIsAdmin, (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/product', productRoutes);
 
 app.use(errorMiddleware);
 app.listen(PORT, () => {
