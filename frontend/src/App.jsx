@@ -11,7 +11,8 @@ import ProfilePage from "./pages/ProfilePage"
 import NotFound from "./pages/NotFound";
 import PrivateRoute from "./components/PrivateRoute";
 import Product from "./pages/Product";
-
+import Payment from "./pages/Payment";
+import OrderCart from "./pages/OrderCart";
 
 export default function App() {
 
@@ -26,12 +27,12 @@ export default function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/product/:id" element={<Product />} />
           <Route path="/search" element={<Search />} />
-          <Route element={<PrivateRoute />}>
-            <Route path="/cart" element={<Cart />} />
-          </Route>
           <Route path="/about-us" element={<About />} />
           <Route element={<PrivateRoute />}>
+            <Route path="/cart" element={<Cart />} />
             <Route path="/profile/*" element={<ProfilePage />} />
+            <Route path="/payment/*" element={<Payment />} />
+            <Route path="/orderCart/*" element={<OrderCart />} />
           </Route>
           <Route path="/*" element={<NotFound />} />
         </Routes>

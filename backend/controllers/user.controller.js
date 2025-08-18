@@ -1,5 +1,6 @@
 import User from "../models/user.model.js"
 import Product from "../models/product.model.js";
+import Order from "../models/order.model.js";
 import { errorHandler } from "../utils/error.js"
 
 export const allUsers = async (req, res, next) => {
@@ -152,7 +153,7 @@ export const getCartProducts = async (req, res, next) => {
         const user = await User.findById(id)
             .populate({
                 path: "cart",
-                select: "_id name price images offer likedBy likesCount",
+                select: "_id name price stock images offer likedBy likesCount",
             })
 
         if (!user) {
@@ -167,6 +168,35 @@ export const getCartProducts = async (req, res, next) => {
 
     } catch (error) {
         return next(errorHandler(500, "Server Error"))
+    }
+
+}
+
+export const getOrderedProducts = async (req, res, next) => {
+
+    try {
+
+        const { id } = req.user;
+
+
+        const user = await User.findById(id)
+            .populate({
+                path: "orders",
+                populate: "items totalAmount status createdAt isReturnRequested"
+            })
+
+        if (!user) return next(errorHandler(404, "User not found"))
+
+        user.orders.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+
+        res
+            .status(200)
+            .json({
+                orders: user.orders
+            })
+
+    } catch (error) {
+        next(errorHandler(500, error))
     }
 
 }

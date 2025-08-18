@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useEffect } from "react"
 import ProductCard from "../components/ProductCard"
+import { NavLink } from "react-router-dom"
 
 export default function Cart() {
     const [cartProduct, setCartProduct] = useState()
@@ -19,7 +20,7 @@ export default function Cart() {
     }, [])
 
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col items-center">
             <h1 className="text-center text-teal-600 text-3xl font-bold">CART ITEMS</h1>
             <div className="flex items-center flex-wrap px-5 py-5">
 
@@ -31,6 +32,7 @@ export default function Cart() {
                     ))
                 }
             </div>
+            <NavLink to={`/orderCart`} className="btn btn-success w-40">PLACE ORDER</NavLink>
         </div>
     )
 }

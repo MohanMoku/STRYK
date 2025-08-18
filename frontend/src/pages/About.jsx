@@ -12,7 +12,7 @@ export default function About() {
             },
         },
         {
-            name: "Mohan Sharma",
+            name: "Sharma",
             email: "mohan@example.com",
             phone: "+91 98765 56789",
             socials: {
@@ -20,19 +20,10 @@ export default function About() {
                 facebook: "https://facebook.com/mohan.fb"
             },
         },
-        {
-            name: "Kiran Patel",
-            email: "kiran@example.com",
-            phone: "+91 98765 67890",
-            socials: {
-                instagram: "https://instagram.com/kiran_insta",
-                facebook: "https://facebook.com/kiran.fb"
-            },
-        },
     ];
 
     return (
-        <div className="h-[100%] bg-gray-700 flex flex-col items-center py-12 px-6">
+        <div className="min-h-[100%] bg-gray-700 flex flex-col items-center py-12 px-6">
             <h1 className="text-5xl font-bold text-green-600 mb-6">About Us</h1>
 
             <p className="max-w-3xl text-center text-lg text-gray-50 mb-12 leading-relaxed">
@@ -43,11 +34,11 @@ export default function About() {
                 across the country.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-5xl">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
                 {founders.map((f, idx) => (
                     <div
                         key={idx}
-                        className="bg-white shadow-lg rounded-2xl p-6 flex flex-col items-center text-center border border-gray-200 hover:shadow-xl transition"
+                        className="bg-white shadow-lg rounded-2xl w-100 p-6 flex flex-col items-center text-center border border-gray-200 hover:shadow-xl transition"
                     >
                         <div className="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl font-bold mb-4">
                             {f.name.charAt(0)}

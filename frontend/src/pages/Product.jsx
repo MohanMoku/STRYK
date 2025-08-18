@@ -7,7 +7,10 @@ import { FcLike } from "react-icons/fc";
 import { useDispatch, useSelector } from "react-redux";
 import { FaRegHeart } from "react-icons/fa";
 import { updateUserStart, updateUserSuccess } from "../app/store";
+import { FaStar } from "react-icons/fa6";
 import ProductCard from "../components/ProductCard";
+import DisplayReview from "../components/DisplayReview";
+import WriteReview from "../components/WriteReview";
 
 export default function Product() {
 
@@ -17,7 +20,7 @@ export default function Product() {
     const currentUser = useSelector((state) => state.user.currentUser);
     const [isUserLiked, setIsUserLiked] = useState(false)
     const [likeValue, setLikeValue] = useState(productToDisplay.likesCount)
-    const [productInCart, setProductInCart] = useState(currentUser.cart.includes(productToDisplay._id))
+    const [productInCart, setProductInCart] = useState(currentUser ? currentUser.cart.includes(productToDisplay._id) : false)
     const dispatch = useDispatch()
     const [similarProducts, setSimilarProducts] = useState([])
 
@@ -153,19 +156,25 @@ export default function Product() {
                             </div>
                         </Carousel>
                     </div>
-                    <div className="flex items-center gap-2 border p-1 rounded-2xl cursor-pointer bg-amber-100 text-black font-bold text-center w-12" onClick={addLikeByUser}>
+                    <div className="flex gap-3">
 
-                        {
-                            isUserLiked ?
-                                <><FcLike /> {likeValue}</> :
-                                <><FaRegHeart /> {likeValue}</>
-                        }
+                        <div className="flex items-center gap-2 border p-1 rounded-2xl cursor-pointer bg-amber-100 text-black font-bold text-center w-12" onClick={addLikeByUser}>
 
+                            {
+                                isUserLiked ?
+                                    <><FcLike /> {likeValue}</> :
+                                    <><FaRegHeart /> {likeValue}</>
+                            }
+
+                        </div>
+                        <div className="flex items-center gap-2 border p-1 rounded-2xl cursor-pointer bg-gray-100 text-black font-bold text-center w-auto">
+                            <FaStar className="text-amber-400" /> {productToDisplay.averageRating.toFixed(1)}
+                        </div>
                     </div>
                 </div>
                 <div className="flex flex-col gap-3 items-center">
 
-                    <div className="font-bold text-blue-300">{String.fromCharCode(8377)} {(100 - productToDisplay.offer) * productToDisplay.price / 100}
+                    <div className="font-bold text-2xl text-blue-300">{String.fromCharCode(8377)} {(100 - productToDisplay.offer) * productToDisplay.price / 100}
                         <span className="font-semibold text-[13px] line-through decoration-red-500 decoration-2">{String.fromCharCode(8377)} {productToDisplay.price} </span></div>
 
                     <label className="text-1xl font-bold">Select Size</label>
@@ -190,7 +199,7 @@ export default function Product() {
 
 
                     <div className="flex gap-2">
-                        <NavLink className="btn btn-success font-bold text-black w-50" disabled={productToDisplay.stock[selected] === 0}>
+                        <NavLink to={`/payment/?id=${productToDisplay._id}&size=${selected}&stock=${productToDisplay.stock[selected]}`} className="btn btn-success font-bold text-black w-50" disabled={productToDisplay.stock[selected] === 0}>
                             {productToDisplay.stock[selected] === 0 ? "Out Of Stock" : "Order Now"}
                         </NavLink>
                         <button className="btn btn-info text-black font-bold" onClick={addOrRemoveCart}>
@@ -237,20 +246,28 @@ export default function Product() {
 
             </div>
 
-            <div>
-                <h1 className="text-center text-2xl font-bold text-green-500">Similar Products</h1>
+            {similarProducts && similarProducts.length > 0 &&
+                <div>
+                    <h1 className="text-center text-2xl font-bold text-green-500">Similar Products</h1>
 
-                <div className="flex items-center flex-wrap px-5 py-5">
+                    <div className="flex items-center flex-wrap px-5 py-5">
 
-                    {
-                        similarProducts?.map((product, index) => (
-                            <div className="m-4" key={index}>
-                                <ProductCard product={product} />
-                            </div>
-                        ))
-                    }
+                        {
+                            similarProducts?.map((product, index) => (
+                                <div className="m-4" key={index}>
+                                    <ProductCard product={product} />
+                                </div>
+                            ))
+                        }
+                    </div>
+
                 </div>
+            }
 
+            <div className="flex flex-col items-center">
+                <h1 className="text-center text-2xl font-bold text-green-500">Reviews</h1>
+                <WriteReview id={id} />
+                <DisplayReview id={id} />
             </div>
         </>
     )

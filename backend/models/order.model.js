@@ -6,6 +6,15 @@ const orderItemSchema = new mongoose.Schema({
         ref: "Product",
         required: true
     },
+    productName: {
+        type: String,
+        required: true
+    },
+    size: {
+        type: String,
+        enum: ["XS", "S", "M", "L", "XL", "XXL"],
+        required: true
+    },
     quantity: {
         type: Number,
         default: 1
@@ -23,27 +32,43 @@ const orderSchema = new mongoose.Schema({
         required: true
     },
     items: [orderItemSchema],
+
     totalAmount: {
         type: Number,
         required: true
     },
+
     status: {
         type: String,
-        enum: ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"],
+        enum: ["Pending", "Processing", "Shipped", "Delivered", "Cancelled", "Return Requested", "Returned"],
         default: "Pending"
     },
+
     paymentMethod: {
         type: String,
-        enum: ["COD", "Credit Card", "Debit Card", "UPI", "PayPal"],
+        enum: ["cod", "Credit Card", "Debit Card", "UPI", "PayPal"],
         required: true
     },
+
     shippingAddress: {
-        street: String,
-        city: String,
-        state: String,
-        postalCode: String,
-        country: String
-    }
+        type: String,
+        required: true
+    },
+
+    isReturnRequested: {
+        type: Boolean,
+        default: false
+    },
+    returnReason: {
+        type: String,
+        default: ""
+    },
+
+    otpCode: {
+        type: String,
+        required: false
+    },
+
 }, { timestamps: true });
 
 export default mongoose.model("Order", orderSchema);

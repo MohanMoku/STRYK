@@ -1,7 +1,16 @@
 import express from 'express';
 import { verifyIsAdmin } from '../utils/verifyAdmin.js';
 import { verifyToken } from '../utils/verifyUser.js';
-import { addOrRemoveCart, allUsers, deleteUser, getCartProducts, getLikedProducts, getUserByUser, updateUser } from '../controllers/user.controller.js';
+import {
+    addOrRemoveCart,
+    allUsers,
+    deleteUser,
+    getCartProducts,
+    getLikedProducts,
+    getOrderedProducts,
+    getUserByUser,
+    updateUser
+} from '../controllers/user.controller.js';
 
 const router = express.Router();
 
@@ -12,5 +21,6 @@ router.delete('/deleteUser', verifyIsAdmin, deleteUser)
 router.get('/getLikedProducts', verifyToken, getLikedProducts)
 router.get('/cart', verifyToken, getCartProducts)
 router.post('/:productId/cart', verifyToken, addOrRemoveCart)
+router.get('/getOrders',verifyToken, getOrderedProducts)
 
 export default router

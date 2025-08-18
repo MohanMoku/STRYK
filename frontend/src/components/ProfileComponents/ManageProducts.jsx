@@ -54,8 +54,6 @@ export default function ManageProducts() {
     const openProduct = (i) => {
         const selected = products[i];
         setProductToDisplay(selected);
-        console.log(selected);
-
         setOpenModal(true);
     };
 

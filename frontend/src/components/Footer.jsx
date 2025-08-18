@@ -2,8 +2,12 @@ import { AiFillInstagram } from "react-icons/ai";
 import { FaFacebookSquare } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { AiFillGoogleCircle } from "react-icons/ai";
+import { useNavigate } from 'react-router-dom';
 
 export default function Footer() {
+
+    const navigate = useNavigate();
+
     return (
         <>
             <footer className="bg-base-200">
@@ -35,16 +39,16 @@ export default function Footer() {
                         </div>
                         <p className="text-base-content text-sm">Premium Football Jerseys</p>
                         <fieldset>
-                            <label className="label-text" for="subscribeLetter"> Subscribe for updates and exclusive offers </label>
+                            <label className="label-text"> Subscribe for updates and exclusive offers </label>
                             <div className="flex w-full flex-wrap gap-1 sm:flex-nowrap">
                                 <input className="input input-sm" id="subscribeLetter" placeholder="example123@gmail.com" />
-                                <button className="btn btn-sm btn-primary" type="submit">Subscribe</button>
+                                <button className="btn btn-sm btn-primary" type="submit" onClick={() => navigate("/sign-up")}>Subscribe</button>
                             </div>
                         </fieldset>
                     </form>
                 </div>
                 <p className='text-center'>
-                    © 2023 STRYK. All rights reserved.
+                    STRYK
                 </p>
             </footer>
         </>

@@ -147,9 +147,76 @@ export const searchQuery = async (req, res, next) => {
             return keywords.some(k => name.includes(k)); // match any keyword
         });
 
+
+
         res
             .status(200)
             .json({ searchedProducts: filtered });
+
+    } catch (error) {
+        next(errorHandler(500, error))
+    }
+
+}
+
+export const addReview = async (req, res, next) => {
+    try {
+        const { id } = req.user;
+        const { productId, rating, comment } = req.body;
+
+        const product = await Product.findById(productId);
+        const user = await User.findById(id);
+
+        if (!product || !user) {
+            return next(errorHandler(404, "Product or User not found"));
+        }
+
+        const totalRatings = product.reviews.reduce((sum, obj) => sum + obj.rating, 0);
+        const preRate = totalRatings + parseInt(rating);
+
+        product.averageRating = preRate / (product.reviews.length + 1);
+
+        product.reviews.push({ user: id, rating, comment });
+
+        await product.save();
+
+        return res.status(200).json({ message: "Review added successfully" });
+    } catch (error) {
+        return next(errorHandler(500, error.message || "Server error"));
+    }
+};
+
+export const reviewDetails = async (req, res, next) => {
+
+    try {
+
+        let responseNeedToSend = [];
+        const { id } = req.query;
+        const product = await Product.findById(id);
+        if (!product) return next(errorHandler(404, "Product not found"))
+
+        for (let review of product.reviews) {
+
+            const user = await User.findById(review.user);
+            if (!user) continue;
+
+            const name = user.name;
+            const dpUri = user.dpUri;
+            const comment = review.comment;
+            const rating = review.rating;
+
+            responseNeedToSend.push({
+                name: name,
+                dpUri: dpUri,
+                comment: comment,
+                rating: rating
+            })
+
+        }
+
+        res
+            .status(200)
+            .json({ reviewDetails: responseNeedToSend })
 
     } catch (error) {
         next(errorHandler(500, error))

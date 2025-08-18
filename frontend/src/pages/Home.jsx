@@ -14,7 +14,7 @@ export default function Home() {
                 className="bg-cover bg-center w-full h-[90vh]  px-60 py-20 overflow-auto scroll-hidden">
 
                 <h1 className="text-center text-6xl font-extrabold text-green-500 mb-10">PLAY BOLD</h1>
-                <div className="flex justify-start">
+                <div className="">
 
                     <div className="card group hover:shadow-sm rounded-2xl w-80">
                         <figure>

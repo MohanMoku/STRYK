@@ -18,7 +18,6 @@ export default function Search() {
                 throw new Error(res.statusText)
             }
             const data = await res.json()
-            console.log(data)
             setProductsList(data.searchedProducts)
             setSearched(true)
 

@@ -2,6 +2,7 @@ import bcryptjs from 'bcryptjs';
 import User from "../models/user.model.js"
 import jwt from "jsonwebtoken"
 import { errorHandler } from '../utils/error.js';
+import { mailToUser } from '../utils/sendMail.js'
 
 export const google = async (req, res, next) => {
 
@@ -51,11 +52,24 @@ export const google = async (req, res, next) => {
 
             await newUser.save();
 
+            const subject = "🎉 Welcome to STRYK Store!";
+            const html = `<div style="font-family: Arial, sans-serif; line-height:1.5;">
+                            <h2>Welcome aboard!</h2>
+                                <p>Hi ${req.body.name},</p>
+                            <p>Thanks for joining us. We're excited to have you with us 🚀</p>
+                            <p>Here you can grab the <b>best football jerseys</b> to show your passion for the game.</p>
+                            <p style="margin-top:15px;">Stay tuned – we’ve got exclusive offers coming your way 😉</p>
+                            <p style="margin-top:25px;">– <b>STRYK</b> ⚽</p>
+                        </div>`;
+
+            await mailToUser(req.body.email, subject, html);
+
             const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
 
             const { password: hashedPassword2, ...rest } = newUser._doc;
 
             const expiryDate = new Date(Date.now() + 1209600000);
+
             res
                 .cookie('token_check', token, {
                     httpOnly: true,

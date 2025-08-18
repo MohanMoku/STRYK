@@ -1,5 +1,5 @@
 import express from 'express'
-import { addLike, addProduct, getAllProductsToAdmin, getThisProductById, searchQuery, updateProduct } from '../controllers/product.controller.js'
+import { addLike, addProduct, addReview, getAllProductsToAdmin, getThisProductById, reviewDetails, searchQuery, updateProduct } from '../controllers/product.controller.js'
 import { verifyToken } from '../utils/verifyUser.js'
 
 const router = express.Router()
@@ -10,5 +10,7 @@ router.post('/addProduct', addProduct)
 router.post('/:productId/like', verifyToken, addLike)
 router.put('/updateProduct', updateProduct)
 router.get('/search', searchQuery)
+router.get('/getReviews', reviewDetails)
+router.post('/addReview', verifyToken, addReview)
 
 export default router
