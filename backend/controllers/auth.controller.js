@@ -8,7 +8,7 @@ export const google = async (req, res, next) => {
 
     const source = req.get("host") || 'unknown';
 
-    if (source !== 'localhost:5173') {
+    if (source !== 'stryk.onrender.com') {
 
         console.log('User came from:', source);
         const data = {
