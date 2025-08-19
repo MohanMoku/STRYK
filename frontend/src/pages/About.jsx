@@ -1,6 +1,9 @@
 import { FaInstagram, FaFacebook, FaEnvelope, FaPhone } from "react-icons/fa";
 
 export default function About() {
+
+    
+
     const founders = [
         {
             name: "Rohan Kumar",
@@ -8,7 +11,7 @@ export default function About() {
             phone: "+91 98765 43210",
             socials: {
                 instagram: "https://instagram.com/rohan_insta",
-                facebook: "https://facebook.com/rohan.fb"
+                // facebook: "https://facebook.com/rohan.fb"
             },
         },
         {
@@ -17,7 +20,7 @@ export default function About() {
             phone: "+91 98765 56789",
             socials: {
                 instagram: "https://instagram.com/mohan_insta",
-                facebook: "https://facebook.com/mohan.fb"
+                // facebook: "https://facebook.com/mohan.fb"
             },
         },
     ];
@@ -52,9 +55,9 @@ export default function About() {
                             <a href={f.socials.instagram} target="_blank" rel="noreferrer">
                                 <FaInstagram className="text-pink-500 text-2xl hover:scale-110 transition" />
                             </a>
-                            <a href={f.socials.facebook} target="_blank" rel="noreferrer">
+                            {/* <a href={f.socials.facebook} target="_blank" rel="noreferrer">
                                 <FaFacebook className="text-blue-600 text-2xl hover:scale-110 transition" />
-                            </a>
+                            </a> */}
                         </div>
                     </div>
                 ))}

@@ -12,8 +12,22 @@ export default function ProductCartVertical({ product }) {
   const [isUserLiked, setIsUserLiked] = useState(product.likedBy.includes(currentUser._id))
   const [likeValue, setLikeValue] = useState(product.likesCount)
 
+  const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState("")
+  const [showMessage, setShowMessage] = useState(false)
+  const showToastMessage = (msg) => {
+    setMessage(msg);
+    setShowMessage(true);
+    setTimeout(() => {
+      setShowMessage(false);
+    }, 3000);
+  }
+
+
   const addLikeByUser = async () => {
     try {
+      setLoading(true)
+
       const res = await fetch(`/api/product/${product._id}/like`, {
         method: "POST",
         headers: {
@@ -31,8 +45,12 @@ export default function ProductCartVertical({ product }) {
         setIsUserLiked(false)
         setLikeValue(likeValue - 1)
       }
+      setLoading(false)
+      showToastMessage("Liked Successfully")
     } catch (error) {
       console.log(error);
+      showToastMessage("Something went wrong")
+      setLoading(false)
     }
 
   }
@@ -64,6 +82,21 @@ export default function ProductCartVertical({ product }) {
         <IoEye className="text-2xl cursor-pointer" onClick={() => navigate(`/product/${product._id}`)} />
       </td>
 
+      {
+        loading && (
+          <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
+            <Spinner color="success" aria-label="Loading" size="xl" />
+          </div>
+        )
+      }
+      {
+        showMessage && (
+          <div className="fixed bottom-4 right-4 bg-gray-400 text-black px-4 py-2 rounded shadow-lg">
+            {message}
+          </div>
+
+        )
+      }
     </tr>
   )
 }

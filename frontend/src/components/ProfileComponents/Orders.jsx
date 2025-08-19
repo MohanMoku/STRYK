@@ -8,18 +8,35 @@ export default function Orders() {
     const [openModal, setOpenModal] = useState(false)
     const [productIndex, setProductIndex] = useState()
 
+    const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState("")
+    const [showMessage, setShowMessage] = useState(false)
+    const showToastMessage = (msg) => {
+        setMessage(msg);
+        setShowMessage(true);
+        setTimeout(() => {
+            setShowMessage(false);
+        }, 3000);
+    }
+
+
     useEffect(() => {
 
         const fetchProducts = async () => {
 
             try {
+                setLoading(true)
                 const res = await fetch('/api/users/getOrders')
                 if (!res.ok) throw new Error("Error")
                 const data = await res.json()
                 setOrders(data.orders)
+                setLoading(false)
+                showToastMessage("Fetched Successfully")
 
             } catch (error) {
                 console.log(error);
+                showToastMessage("Something went wrong")
+                setLoading(false)
             }
         }
 
@@ -30,7 +47,7 @@ export default function Orders() {
     const sendReturnRequest = async () => {
 
         try {
-
+            setLoading(true)
             const tempOrder = orders[productIndex]
             const res = await fetch('/api/order/orderReturnRequest', {
                 method: "PUT",
@@ -51,10 +68,14 @@ export default function Orders() {
             setOpenModal(false)
             setProductIndex(null)
             setReturnMsg("")
+            setLoading(false)
+            showToastMessage("Return Request Sent")
             window.location.reload()
 
         } catch (error) {
             console.log(error);
+            showToastMessage("Something went wrong")
+            setLoading(false)
         }
 
     }
@@ -116,6 +137,22 @@ export default function Orders() {
                     <button className="btn btn-error disabled:cursor-not-allowed" disabled={returnMsg.trim() === ""} onClick={sendReturnRequest}>Submit</button>
                 </ModalBody>
             </Modal>
+
+            {
+                loading && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
+                        <Spinner color="success" aria-label="Loading" size="xl" />
+                    </div>
+                )
+            }
+            {
+                showMessage && (
+                    <div className="fixed bottom-4 right-4 bg-gray-400 text-black px-4 py-2 rounded shadow-lg">
+                        {message}
+                    </div>
+
+                )
+            }
 
         </div>
     )

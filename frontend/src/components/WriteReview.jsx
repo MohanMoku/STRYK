@@ -1,3 +1,4 @@
+import { Spinner } from 'flowbite-react';
 import React, { useState } from 'react'
 import { FaStar } from "react-icons/fa6";
 import { useSelector } from 'react-redux';
@@ -7,6 +8,17 @@ export default function WriteReview({ id }) {
     const [rating, setRating] = useState(0)
     const currentUser = useSelector((state) => state.user.currentUser);
     const navigate = useNavigate();
+
+    const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState("")
+    const [showMessage, setShowMessage] = useState(false)
+    const showToastMessage = (msg) => {
+        setMessage(msg);
+        setShowMessage(true);
+        setTimeout(() => {
+            setShowMessage(false);
+        }, 3000);
+    }
 
     const addReview = async () => {
 
@@ -18,6 +30,8 @@ export default function WriteReview({ id }) {
         if (!review || rating === 0) return;
 
         try {
+
+            setLoading(true)
 
             const res = await fetch(`/api/product/addReview`, {
                 method: "POST",
@@ -34,9 +48,13 @@ export default function WriteReview({ id }) {
             setReview("")
             setRating(0)
             window.location.reload()
+            setLoading(false)
+            showToastMessage("Review Added Successfully")
 
         } catch (error) {
             console.log(error);
+            showToastMessage("Something went wrong")
+            setLoading(false)
         }
 
     }
@@ -63,6 +81,22 @@ export default function WriteReview({ id }) {
                     <button className='btn btn-success text-black font-bold w-22 h-8' onClick={addReview}>POST</button>
                 </div>
             </div>
+
+            {
+                loading && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
+                        <Spinner color="success" aria-label="Loading" size="xl" />
+                    </div>
+                )
+            }
+            {
+                showMessage && (
+                    <div className="fixed bottom-4 right-4 bg-gray-400 text-black px-4 py-2 rounded shadow-lg">
+                        {message}
+                    </div>
+
+                )
+            }
 
         </div>
     )

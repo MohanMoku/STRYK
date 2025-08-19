@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { TiMinus, TiPlus } from 'react-icons/ti';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Spinner } from "flowbite-react"
 
 export default function OrderCart() {
     const [cartProducts, setCartProducts] = useState([])
@@ -11,16 +12,32 @@ export default function OrderCart() {
     const paymentMethod = "cod";
     const navigate = useNavigate()
 
+    const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState("")
+    const [showMessage, setShowMessage] = useState(false)
+    const showToastMessage = (msg) => {
+        setMessage(msg);
+        setShowMessage(true);
+        setTimeout(() => {
+            setShowMessage(false);
+        }, 3000);
+    }
+
     useEffect(() => {
         const fetchCartProducts = async () => {
             try {
+                setLoading(true)
                 const res = await fetch('/api/users/cart')
                 const data = await res.json()
                 setCartProducts(data.cartProducts)
                 setSizeArr(Array(data.cartProducts.length).fill("M"))
                 setQtyArr(Array(data.cartProducts.length).fill(1))
+                showToastMessage("Fetched Successfully")
+                setLoading(false)
             } catch (error) {
                 console.log(error);
+                showToastMessage("Something went wrong")
+                setLoading(false)
             }
         }
         fetchCartProducts()
@@ -60,6 +77,7 @@ export default function OrderCart() {
 
     const placeOrder = async () => {
         try {
+            setLoading(true)
             const res = await fetch("/api/order/placeOrder", {
                 method: "POST",
                 headers: {
@@ -78,9 +96,15 @@ export default function OrderCart() {
             })
             const data = await res.json()
             if (!res.ok) throw new Error(data.message)
+            setLoading(false)
+            showToastMessage("Order Placed Successfully")
             navigate('/')
         } catch (error) {
             console.log(error);
+            showToastMessage("Something went wrong")
+            setLoading(false)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -246,7 +270,7 @@ export default function OrderCart() {
                                 type="radio"
                                 value="cod"
                                 defaultChecked
-                                // checked={paymentMethod === "cod"}
+                            // checked={paymentMethod === "cod"}
                             // onChange={(e) => setPaymentMethod(e.target.value)}
                             />
                             <span>Cash on Delivery</span>
@@ -261,6 +285,22 @@ export default function OrderCart() {
             >
                 Pay Now
             </button>
+
+            {
+                loading && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
+                        <Spinner color="success" aria-label="Loading" size="xl" />
+                    </div>
+                )
+            }
+            {
+                showMessage && (
+                    <div className="fixed bottom-4 right-4 bg-gray-400 text-black px-4 py-2 rounded shadow-lg">
+                        {message}
+                    </div>
+
+                )
+            }
 
         </div>
     )

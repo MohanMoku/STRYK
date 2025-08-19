@@ -1,20 +1,32 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaPowerOff } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { updateUserFailure, updateUserStart, updateUserSuccess } from "../app/store";
+import { Spinner } from "flowbite-react";
 
 export default function Header() {
 
     const dispatch = useDispatch();
 
     const currentUser = useSelector((state) => state.user.currentUser);
+    const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState("")
+    const [showMessage, setShowMessage] = useState(false)
+    const showToastMessage = (msg) => {
+        setMessage(msg);
+        setShowMessage(true);
+        setTimeout(() => {
+            setShowMessage(false);
+        }, 3000);
+    }
 
     useEffect(() => {
 
         const fetchUser = async () => {
 
             try {
+                setLoading(true)
 
                 dispatch(updateUserStart())
 
@@ -25,10 +37,14 @@ export default function Header() {
                 const user = data.user
 
                 dispatch(updateUserSuccess(user))
+                setLoading(false)
+                showToastMessage("Fetched Successfully")
 
             } catch (error) {
                 dispatch(updateUserFailure(currentUser))
                 console.log(error);
+                showToastMessage("Something went wrong")
+                setLoading(false)
             }
 
         }
@@ -59,6 +75,22 @@ export default function Header() {
                         <FaPowerOff className="w-10 h-10 text-white text-3xl border-2 border-white rounded-full p-1 cursor-pointer hover:border-red-500 hover:text-red-500 transition-all duration-300" />
                 }
             </Link>
+
+            {
+                loading && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
+                        <Spinner color="success" aria-label="Loading" size="xl" />
+                    </div>
+                )
+            }
+            {
+                showMessage && (
+                    <div className="fixed bottom-4 right-4 bg-gray-400 text-black px-4 py-2 rounded shadow-lg">
+                        {message}
+                    </div>
+
+                )
+            }
         </header>
     );
 }

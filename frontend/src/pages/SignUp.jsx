@@ -7,6 +7,7 @@ import { signInStart, signInSuccess, signInFailure } from "../app/store";
 import { useState } from "react";
 
 export default function SignUp() {
+    
     const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate();

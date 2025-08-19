@@ -1,4 +1,4 @@
-import { Carousel } from "flowbite-react";
+import { Carousel, Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { FcLike } from "react-icons/fc";
@@ -10,6 +10,16 @@ export default function ProductCard({ product }) {
     const currentUser = useSelector((state) => state.user.currentUser);
     const [isUserLiked, setIsUserLiked] = useState(false)
     const [likeValue, setLikeValue] = useState(product.likesCount)
+    const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState("")
+    const [showMessage, setShowMessage] = useState(false)
+    const showToastMessage = (msg) => {
+        setMessage(msg);
+        setShowMessage(true);
+        setTimeout(() => {
+            setShowMessage(false);
+        }, 1000);
+    }
 
     const handleReload = () => {
         setTimeout(() => {
@@ -25,6 +35,14 @@ export default function ProductCard({ product }) {
 
     const addLikeByUser = async () => {
         try {
+
+            if(!currentUser) {
+                showToastMessage("Please Login First")
+                return
+            }
+
+            setLoading(true)
+
             const res = await fetch(`/api/product/${product._id}/like`, {
                 method: "POST",
                 headers: {
@@ -42,8 +60,12 @@ export default function ProductCard({ product }) {
                 setIsUserLiked(false)
                 setLikeValue(likeValue - 1)
             }
+            setLoading(false)
+            showToastMessage("Liked Successfully")
         } catch (error) {
             console.log(error);
+            showToastMessage("Something went wrong")
+            setLoading(false)
         }
     }
 
@@ -92,6 +114,21 @@ export default function ProductCard({ product }) {
                     PREVIEW & BUY
                 </NavLink>
             </div>
+
+            {
+                loading && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
+                        <Spinner color="success" aria-label="Loading" size="xl" />
+                    </div>
+                )
+            }
+            {
+                showMessage && (
+                    <div className="fixed bottom-4 right-4 bg-gray-400 text-black px-4 py-2 rounded shadow-lg">
+                        {message}
+                    </div>
+                )
+            }
 
         </div >
     )

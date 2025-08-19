@@ -6,17 +6,17 @@ import { mailToUser } from '../utils/sendMail.js'
 
 export const google = async (req, res, next) => {
 
-    const source = req.query.source || 'unknown';
+    const source = req.get("host") || 'unknown';
 
-    // if (source !== 'http://localhost:3000') {
+    if (source !== 'localhost:5173') {
 
-    //     console.log('User came from:', source);
-    //     const data = {
-    //         error: "Unauthorized Action"
-    //     }
-    //     res.send(data);
-    //     return ;
-    // }
+        console.log('User came from:', source);
+        const data = {
+            error: "Unauthorized Action"
+        }
+        res.send(data);
+        return;
+    }
 
     try {
 

@@ -1,4 +1,4 @@
-import { Modal, ModalBody, ModalHeader } from "flowbite-react"
+import { Modal, ModalBody, ModalHeader, Spinner } from "flowbite-react"
 import { useEffect, useState } from "react"
 
 export default function AllOrders() {
@@ -10,6 +10,16 @@ export default function AllOrders() {
     const [otpError, setOtpError] = useState(false)
     const [otp, setOtp] = useState("")
 
+    const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState("")
+    const [showMessage, setShowMessage] = useState(false)
+    const showToastMessage = (msg) => {
+        setMessage(msg);
+        setShowMessage(true);
+        setTimeout(() => {
+            setShowMessage(false);
+        }, 3000);
+    }
 
     useEffect(() => {
 
@@ -17,14 +27,19 @@ export default function AllOrders() {
 
             try {
 
+                setLoading(true)
+
                 const res = await fetch('/api/order/allOrders')
                 if (!res.ok) throw new Error("Error")
                 const data = await res.json()
                 setOrders(data.orders)
+                setLoading(false)
+                showToastMessage("Fetched Successfully")
 
             } catch (error) {
                 console.log(error);
-
+                showToastMessage("Something went wrong")
+                setLoading(false)
             }
 
         }
@@ -36,7 +51,7 @@ export default function AllOrders() {
     const upDateStatus = async () => {
 
         try {
-
+            setLoading(true)
             const res = await fetch('/api/order/upDateOrderStatus', {
                 method: "PUT",
                 headers: {
@@ -49,11 +64,15 @@ export default function AllOrders() {
             })
 
             if (!res.ok) throw new Error("Not Updated")
+            setLoading(false)
+            showToastMessage("Status Updated Successfully")
 
             // const data = await res.json()
 
         } catch (error) {
             console.log(error);
+            showToastMessage("Something went wrong")
+            setLoading(false)
         }
 
     }
@@ -68,6 +87,7 @@ export default function AllOrders() {
 
         try {
 
+            setLoading(true)
             const res = await fetch('/api/order/upDateOrderStatus', {
                 method: "PUT",
                 headers: {
@@ -79,12 +99,17 @@ export default function AllOrders() {
                 }),
             })
 
-            if (!res.ok) throw new Error("Not Updated")
+            if (!res.ok) throw new Error("Not Updated");
+            
+            setLoading(false)
+            showToastMessage("Status Updated Successfully")
 
             // const data = await res.json()
 
         } catch (error) {
             console.log(error);
+            showToastMessage("Something went wrong")
+            setLoading(false)
         }
 
     }
@@ -163,6 +188,22 @@ export default function AllOrders() {
                     {/* <button className="btn btn-error disabled:cursor-not-allowed" disabled={returnMsg.trim() === ""} onClick={sendReturnRequest}>Submit</button> */}
                 </ModalBody>
             </Modal>
+
+            {
+                loading && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
+                        <Spinner color="success" aria-label="Loading" size="xl" />
+                    </div>
+                )
+            }
+            {
+                showMessage && (
+                    <div className="fixed bottom-4 right-4 bg-gray-400 text-black px-4 py-2 rounded shadow-lg">
+                        {message}
+                    </div>
+
+                )
+            }
 
         </div>
     )

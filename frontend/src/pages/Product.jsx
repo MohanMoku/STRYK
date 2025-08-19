@@ -1,4 +1,4 @@
-import { Accordion, AccordionContent, AccordionPanel, AccordionTitle, Carousel } from "flowbite-react";
+import { Accordion, AccordionContent, AccordionPanel, AccordionTitle, Carousel, Spinner } from "flowbite-react";
 import ShareButtons from "../components/ShareButtons";
 import { NavLink, useParams } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa";
@@ -13,6 +13,17 @@ import DisplayReview from "../components/DisplayReview";
 import WriteReview from "../components/WriteReview";
 
 export default function Product() {
+
+    const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState("")
+    const [showMessage, setShowMessage] = useState(false)
+    const showToastMessage = (msg) => {
+        setMessage(msg);
+        setShowMessage(true);
+        setTimeout(() => {
+            setShowMessage(false);
+        }, 3000);
+    }
 
     const [selected, setSelected] = useState("M");
     const { id } = useParams()
@@ -29,6 +40,7 @@ export default function Product() {
         const fetchProduct = async () => {
 
             try {
+                setLoading(true)
 
                 const res = await fetch(`/api/product/getProduct/?id=${id}`)
                 const data = await res.json()
@@ -44,9 +56,13 @@ export default function Product() {
                 const data1 = await res1.json()
                 const filteredSimilar = data1.searchedProducts.filter(p => p._id !== data.product._id)
                 setSimilarProducts(filteredSimilar)
+                setLoading(false)
+                showToastMessage("Fetched Successfully")
 
             } catch (error) {
                 console.log(error);
+                showToastMessage("Something went wrong")
+                setLoading(false)
             }
 
         }
@@ -58,6 +74,8 @@ export default function Product() {
     const addOrRemoveCart = async () => {
 
         try {
+
+            setLoading(true)
 
             const res = await fetch(`/api/users/${productToDisplay._id}/cart`, {
                 method: 'POST',
@@ -79,14 +97,20 @@ export default function Product() {
 
             setProductInCart(data.inCart)
 
+            setLoading(false)
+            showToastMessage("Data Updated Successfully")
+
         } catch (error) {
             console.log(error);
+            showToastMessage("Something went wrong")
+            setLoading(false)
         }
 
     }
 
     const addLikeByUser = async () => {
         try {
+            setLoading(true)
             const res = await fetch(`/api/product/${productToDisplay._id}/like`, {
                 method: "POST",
                 headers: {
@@ -104,8 +128,13 @@ export default function Product() {
                 setIsUserLiked(false)
                 setLikeValue(likeValue - 1)
             }
+
+            setLoading(false)
+            showToastMessage("Updated Successfully")
         } catch (error) {
             console.log(error);
+            showToastMessage("Something went wrong")
+            setLoading(false)
         }
 
     }
@@ -269,6 +298,23 @@ export default function Product() {
                 <WriteReview id={id} />
                 <DisplayReview id={id} />
             </div>
+
+            {
+                loading && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
+                        <Spinner color="success" aria-label="Loading" size="xl" />
+                    </div>
+                )
+            }
+            {
+                showMessage && (
+                    <div className="fixed bottom-4 right-4 bg-gray-400 text-black px-4 py-2 rounded shadow-lg">
+                        {message}
+                    </div>
+
+                )
+            }
+
         </>
     )
 }

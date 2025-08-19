@@ -1,3 +1,4 @@
+import { Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa6";
 
@@ -5,11 +6,24 @@ export default function DisplayReview({ id }) {
 
     const [reviews, setReviews] = useState([])
 
+    const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState("")
+    const [showMessage, setShowMessage] = useState(false)
+    const showToastMessage = (msg) => {
+        setMessage(msg);
+        setShowMessage(true);
+        setTimeout(() => {
+            setShowMessage(false);
+        }, 3000);
+    }
+
+
     useEffect(() => {
 
         const getReviews = async () => {
 
             try {
+                setLoading(true)
 
                 const res = await fetch(`/api/product/getReviews?id=${id}`)
 
@@ -17,9 +31,13 @@ export default function DisplayReview({ id }) {
 
                 const data = await res.json();
                 setReviews(data.reviewDetails)
+                setLoading(false)
+                showToastMessage("Fetched Successfully")
 
             } catch (error) {
                 console.log(error);
+                showToastMessage("Something went wrong")
+                setLoading(false)
             }
 
         }
@@ -43,6 +61,21 @@ export default function DisplayReview({ id }) {
                             <p className="text-white text-xl">{review.rating}</p>
                         </div>
                     </div>
+                )
+            }
+            {
+                loading && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
+                        <Spinner color="success" aria-label="Loading" size="xl" />
+                    </div>
+                )
+            }
+            {
+                showMessage && (
+                    <div className="fixed bottom-4 right-4 bg-gray-400 text-black px-4 py-2 rounded shadow-lg">
+                        {message}
+                    </div>
+
                 )
             }
         </>

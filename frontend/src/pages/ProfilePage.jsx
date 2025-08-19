@@ -7,7 +7,6 @@ import Likes from "../components/ProfileComponents/Likes"
 import ManageProducts from "../components/ProfileComponents/ManageProducts"
 import ManageUsers from "../components/ProfileComponents/ManageUsers"
 import AddNewProduct from "../components/ProfileComponents/AddNewProduct"
-import TrackOrder from "../components/ProfileComponents/TrackOrders"
 import AuthRoute from "../components/AuthRoute"
 import AllOrders from "../components/ProfileComponents/AllOrders"
 
@@ -30,7 +29,6 @@ export default function ProfilePage() {
                         <Route path="/mng-users" element={<ManageUsers />} />
                         <Route path="/add-product" element={<AddNewProduct />} />
                         <Route path="/list-orders" element={<AllOrders />} />
-                        <Route path="/track-order" element={<TrackOrder />} />
                     </Route>
                 </Routes>
             </div>

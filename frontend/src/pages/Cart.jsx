@@ -2,17 +2,35 @@ import { useState } from "react"
 import { useEffect } from "react"
 import ProductCard from "../components/ProductCard"
 import { NavLink } from "react-router-dom"
+import { Spinner } from "flowbite-react"
 
 export default function Cart() {
+
     const [cartProduct, setCartProduct] = useState()
+    const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState("")
+    const [showMessage, setShowMessage] = useState(false)
+    const showToastMessage = (msg) => {
+        setMessage(msg);
+        setShowMessage(true);
+        setTimeout(() => {
+            setShowMessage(false);
+        }, 3000);
+    }
+
     useEffect(() => {
         const fetchCartProducts = async () => {
+            setLoading(true)
             try {
                 const res = await fetch('/api/users/cart')
                 const data = await res.json()
                 setCartProduct(data.cartProducts)
+                showToastMessage("Fetched Successfully")
             } catch (error) {
                 console.log(error);
+                showToastMessage("Something went wrong")
+            } finally {
+                setLoading(false)
             }
         }
         fetchCartProducts()
@@ -33,6 +51,22 @@ export default function Cart() {
                 }
             </div>
             <NavLink to={`/orderCart`} className="btn btn-success w-40">PLACE ORDER</NavLink>
+
+            {
+                loading && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
+                        <Spinner color="success" aria-label="Loading" size="xl" />
+                    </div>
+                )
+            }
+            {
+                showMessage && (
+                    <div className="fixed bottom-4 right-4 bg-gray-400 text-black px-4 py-2 rounded shadow-lg">
+                        {message}
+                    </div>
+
+                )
+            }
         </div>
     )
 }

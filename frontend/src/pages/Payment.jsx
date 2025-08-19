@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { TiPlus, TiMinus } from "react-icons/ti";
+import { Spinner } from "flowbite-react";
 
 export default function Payment() {
 
@@ -18,16 +19,32 @@ export default function Payment() {
     const total = basePrice + deliveryCharge;
     const navigate = useNavigate()
 
+    const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState("")
+    const [showMessage, setShowMessage] = useState(false)
+    const showToastMessage = (msg) => {
+        setMessage(msg);
+        setShowMessage(true);
+        setTimeout(() => {
+            setShowMessage(false);
+        }, 3000);
+    }
+
     useEffect(() => {
         const fetchProduct = async () => {
             try {
+                setLoading(true)
                 const res = await fetch(`/api/product/getProduct/?id=${productId}`)
                 if (!res.ok) throw new Error("Something went wrong");
                 const data = await res.json()
                 setProductToDisplay(data.product)
                 setStock(data.product.stock[size])
+                setLoading(false)
+                showToastMessage("Fetched Successfully")
             } catch (error) {
                 console.log(error);
+                showToastMessage("Something went wrong")
+                setLoading(false)
             }
         }
         fetchProduct()
@@ -47,6 +64,7 @@ export default function Payment() {
     const placeOrder = async () => {
 
         try {
+            setLoading(true)
             const res = await fetch("/api/order/placeOrder", {
                 method: "POST",
                 headers: {
@@ -72,10 +90,14 @@ export default function Payment() {
 
             const data = await res.json()
             console.log(data);
-            if (!res.ok) throw new Error(data.message)
-            navigate('/') 
+            if (!res.ok) throw new Error(data.message);
+            setLoading(false)
+            showToastMessage("Order Placed Successfully")
+            navigate('/')
         } catch (error) {
             console.log(error);
+            showToastMessage("Something went wrong")
+            setLoading(false)
         }
     }
 
@@ -171,6 +193,23 @@ export default function Payment() {
             <button className="w-100 mt-4 text-lg py-4 rounded-2xl bg-green-600 disabled:cursor-not-allowed text-white hover:bg-green-700" disabled={custStock === 0} onClick={placeOrder}>
                 Pay Now
             </button>
+
+            {
+                loading && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
+                        <Spinner color="success" aria-label="Loading" size="xl" />
+                    </div>
+                )
+            }
+            {
+                showMessage && (
+                    <div className="fixed bottom-4 right-4 bg-gray-400 text-black px-4 py-2 rounded shadow-lg">
+                        {message}
+                    </div>
+
+                )
+            }
+
         </div>
     );
 }

@@ -9,10 +9,21 @@ export default function Search() {
 
     const [searched, setSearched] = useState(false)
 
+    const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState("")
+    const [showMessage, setShowMessage] = useState(false)
+    const showToastMessage = (msg) => {
+        setMessage(msg);
+        setShowMessage(true);
+        setTimeout(() => {
+            setShowMessage(false);
+        }, 3000);
+    }
+
     const handleSearch = async () => {
 
         try {
-
+            setLoading(true)
             const res = await fetch(`/api/product/search?query=${query}`)
             if (!res.ok) {
                 throw new Error(res.statusText)
@@ -20,10 +31,12 @@ export default function Search() {
             const data = await res.json()
             setProductsList(data.searchedProducts)
             setSearched(true)
-
+            setLoading(false)
+            showToastMessage("Fetched Successfully")
         } catch (error) {
             console.log(error);
-
+            showToastMessage("Something went wrong")
+            setLoading(false)
         }
 
     }
@@ -55,6 +68,22 @@ export default function Search() {
                     ))
                 }
             </div>
+
+            {
+                loading && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
+                        <Spinner color="success" aria-label="Loading" size="xl" />
+                    </div>
+                )
+            }
+            {
+                showMessage && (
+                    <div className="fixed bottom-4 right-4 bg-gray-400 text-black px-4 py-2 rounded shadow-lg">
+                        {message}
+                    </div>
+
+                )
+            }
 
         </div>
     )
