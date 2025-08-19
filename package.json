@@ -4,8 +4,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "node --env-file=.env backend/index.js",
-    "dev": "nodemon --env-file=.env backend/index.js",
+    "dev": "nodemon --require dotenv/config backend/index.js",
+    "start": "node --require dotenv/config backend/index.js",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
