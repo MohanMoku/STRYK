@@ -13,11 +13,22 @@ export default {
   theme: {
     extend: {},
     flyonui: {
-      themes: [/* optional custom themes, see docs */]
+      themes: false
+    },
+    screens: {
+      'sm': '576px',
+      'md': '960px',
+      'lg': '1440px',
+      'xl': '1280px',
     },
   },
   plugins: [
     flowbitePlugin,
     flyonui
   ],
+  variants: {
+    extend: {
+      backgroundColor: ['responsive'], // Ensure responsive is included
+    },
+  },
 }

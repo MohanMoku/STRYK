@@ -56,15 +56,16 @@ export default function Search() {
                 <div className="m-10">No products found</div>
             }
 
-            <div className="flex flex-wrap">
+            <div className="flex flex-col md:flex-row md:justify-around md:flex-wrap">
                 {
                     searched && productsList.length > 0 &&
 
-
                     productsList?.map((product, index) => (
-                        <div className="m-4" key={index}>
-                            <ProductCard product={product} />
-                        </div>
+                        <>
+                            <div className="m-4" key={index}>
+                                <ProductCard product={product} />
+                            </div>
+                        </>
                     ))
                 }
             </div>

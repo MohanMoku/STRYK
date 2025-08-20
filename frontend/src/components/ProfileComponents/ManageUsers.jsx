@@ -47,7 +47,7 @@ export default function ManageUsers() {
                 setLoading(false)
                 setAllUsers(data.userList);
                 showToastMessage("Details fetched successfully")
-                
+
             } catch (error) {
                 setLoading(false)
                 showToastMessage("Network Error")
@@ -109,7 +109,8 @@ export default function ManageUsers() {
     }
 
     return (
-        <div className="mt-8 overflow-x-auto">
+        <div className="mt-8 overflow-x-auto pt-4 lg:pt-0">
+            <h1 className="fixed top-20 left-30 text-red-500 md:hidden">make horizontal view</h1>
             <table className="table">
                 <thead>
                     <tr>

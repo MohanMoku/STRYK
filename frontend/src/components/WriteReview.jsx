@@ -67,18 +67,18 @@ export default function WriteReview({ id }) {
 
     return (
         <div className='p-5 flex flex-col gap-3 items-center justify-center border-b'>
-            <h1 className='text-2xl font-bold text-center text-white'>Add Review</h1>
-            <div className="flex gap-2">
+            <h1 className='text-xl md:text-2xl font-bold text-center text-white'>Add Review</h1>
+            <div className="flex gap-2 justify-center items-center">
                 <img
                     src={currentUser ? currentUser.dpUri : "https://th.bing.com/th/id/R.5539f4340c5a97c0520795b765349d50?rik=y0ZNNL031Nmo0g&pid=ImgRaw&r=0"}
-                    alt="Image" className='w-20 h-20 rounded-full object-cover' />
-                <textarea value={review} className='w-80 rounded input h-20 bg-amber-50 text-black' onChange={(e) => setReview(e.target.value)} />
+                    alt="Image" className='w-10 h-10 md:w-20 md:h-20 rounded-full object-cover' />
+                <textarea value={review} className='w-55 md:w-80 rounded input h-15 md:h-20 bg-amber-50 text-black' onChange={(e) => setReview(e.target.value)} />
                 <div className="flex flex-col items-center gap-2">
                     <div className="flex items-center gap-2">
-                        <FaStar className='text-yellow-400 text-2xl' />
-                        <input value={rating} type="number" min="1" max="5" className='text-white w-15 text-center input' onChange={handleRating} />
+                        <FaStar className='text-yellow-400 text-xl md:text-2xl' />
+                        <input value={rating} type="number" min="1" max="5" className='text-white text-1xl w-10 md:w-15 text-center input' onChange={handleRating} />
                     </div>
-                    <button className='btn btn-success text-black font-bold w-22 h-8' onClick={addReview}>POST</button>
+                    <button className='btn btn-success text-black font-bold w-15 md:w-22 h-6 md:h-8' onClick={addReview}>POST</button>
                 </div>
             </div>
 

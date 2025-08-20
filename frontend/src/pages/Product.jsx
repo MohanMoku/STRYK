@@ -47,6 +47,8 @@ export default function Product() {
                 setProductToDisplay(data.product)
                 setIsUserLiked(data.product.likedBy.includes(currentUser._id))
                 setProductInCart(currentUser.cart.includes(data.product._id))
+                console.log(data.product.likesCount);
+                
                 setLikeValue(data.product.likesCount)
 
                 const res1 = await fetch(`/api/product/search?query=${data.product.name.split(" ")[0] + " " + data.product.year}`)
@@ -149,10 +151,10 @@ export default function Product() {
 
     return (
         <>
-            <h1 className="text-4xl text-center font-bold text-white">{productToDisplay.name}</h1>
-            <div className="flex justify-center gap-30 p-5">
-                <div className="object-cover flex flex-col items-center gap-5">
-                    <div className="relative h-130 w-130 overflow-hidden rounded-2xl">
+            <h1 className="text-xl md:text-4xl text-center font-bold text-white">{productToDisplay.name}</h1>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-30 p-5">
+                <div className="object-cover flex flex-col items-center gap-2 md:gap-5">
+                    <div className="relative w-70 h-70 md:h-130 md:w-130 overflow-hidden rounded-2xl">
                         <Carousel>
 
                             <div className="flex h-full items-center justify-center bg-transparent">
@@ -203,8 +205,8 @@ export default function Product() {
                 </div>
                 <div className="flex flex-col gap-3 items-center">
 
-                    <div className="font-bold text-2xl text-blue-300">{String.fromCharCode(8377)} {(100 - productToDisplay.offer) * productToDisplay.price / 100}
-                        <span className="font-semibold text-[13px] line-through decoration-red-500 decoration-2">{String.fromCharCode(8377)} {productToDisplay.price} </span></div>
+                    <div className="font-bold text-3xl text-blue-300">{String.fromCharCode(8377)} {(100 - productToDisplay.offer) * productToDisplay.price / 100}
+                        <span className="font-semibold text-[13px] text-xl line-through decoration-red-500 decoration-2">{String.fromCharCode(8377)} {productToDisplay.price} </span></div>
 
                     <label className="text-1xl font-bold">Select Size</label>
                     <div className="flex gap-4">
@@ -228,7 +230,7 @@ export default function Product() {
 
 
                     <div className="flex gap-2">
-                        <NavLink to={`/payment/?id=${productToDisplay._id}&size=${selected}&stock=${productToDisplay.stock[selected]}`} className="btn btn-success font-bold text-black w-50" disabled={productToDisplay.stock[selected] === 0}>
+                        <NavLink to={`/payment/?id=${productToDisplay._id}&size=${selected}&stock=${productToDisplay.stock[selected]}`} className="btn btn-success font-bold text-black w-40 md:w-50" disabled={productToDisplay.stock[selected] === 0}>
                             {productToDisplay.stock[selected] === 0 ? "Out Of Stock" : "Order Now"}
                         </NavLink>
                         <button className="btn btn-info text-black font-bold" onClick={addOrRemoveCart}>
@@ -236,7 +238,7 @@ export default function Product() {
                         </button>
                     </div>
 
-                    <Accordion className="w-100">
+                    <Accordion className="w-70 md:w-100">
                         <AccordionPanel>
                             <AccordionTitle>Description</AccordionTitle>
                             <AccordionContent>
@@ -244,7 +246,7 @@ export default function Product() {
                             </AccordionContent>
                         </AccordionPanel>
                     </Accordion>
-                    <Accordion collapseAll className="w-100">
+                    <Accordion collapseAll className="w-70 md:w-100">
                         <AccordionPanel>
                             <AccordionTitle>Shipping Policy</AccordionTitle>
                             <AccordionContent>
@@ -279,15 +281,16 @@ export default function Product() {
                 <div>
                     <h1 className="text-center text-2xl font-bold text-green-500">Similar Products</h1>
 
-                    <div className="flex items-center flex-wrap px-5 py-5">
+                    <div className="flex items-center justify-center flex-col flex-wrap px-5 py-5">
 
                         {
-                            similarProducts?.map((product, index) => (
+                            similarProducts?.slice(0, 5).map((product, index) => (
                                 <div className="m-4" key={index}>
                                     <ProductCard product={product} />
                                 </div>
                             ))
                         }
+
                     </div>
 
                 </div>

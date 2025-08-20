@@ -136,14 +136,13 @@ export default function AddNewProduct() {
 
     return (
 
-        <div className="flex items-center flex-col justify-center pb-5">
-            <div className="flex gap-1 h-auto p-10">
+        <div className="flex items-center flex-col pb-5">
+            <div className="flex flex-col w-full md:flex-row md:gap-1 h-auto p-10">
+                <div className="w-auto md:w-7/12 flex flex-col gap-2 p-15 items-center justify-center">
 
-                <div className="w-7/12 flex flex-col gap-2 p-15 items-center justify-center">
+                    <h1 className="text-center text-2xl md:text-4xl mb-10 font-bold">Add New Product</h1>
 
-                    <h1 className="text-center text-4xl mb-10 font-bold">Add New Product</h1>
-
-                    <div className="input-floating w-96">
+                    <div className="input-floating w-70 md:w-96">
                         <input
                             type="text"
                             placeholder="Name"
@@ -156,7 +155,7 @@ export default function AddNewProduct() {
                         <label className="input-floating-label">Name</label>
                     </div>
 
-                    <div className="input-floating w-96">
+                    <div className="input-floating w-70 md:w-96">
                         <input
                             type="text"
                             placeholder="Team"
@@ -169,7 +168,7 @@ export default function AddNewProduct() {
                         <label className="input-floating-label">Team</label>
                     </div>
 
-                    <div className="input-floating w-96">
+                    <div className="input-floating w-70 md:w-96">
                         <input
                             type="text"
                             placeholder="Year"
@@ -182,7 +181,7 @@ export default function AddNewProduct() {
                         <label className="input-floating-label">Year</label>
                     </div>
 
-                    <div className="input-floating w-96">
+                    <div className="input-floating w-70 md:w-96">
                         <input
                             type="number"
                             placeholder="Price"
@@ -195,7 +194,7 @@ export default function AddNewProduct() {
                         <label className="input-floating-label">Price</label>
                     </div>
 
-                    <div className="input-floating w-96">
+                    <div className="input-floating w-70 md:w-96">
                         <input
                             type="number"
                             placeholder="Offer"
@@ -208,7 +207,7 @@ export default function AddNewProduct() {
                         <label className="input-floating-label">Offer</label>
                     </div>
 
-                    <div className="input-floating w-96">
+                    <div className="input-floating w-70 md:w-96">
                         <input
                             type="text"
                             placeholder="Category"
@@ -221,7 +220,7 @@ export default function AddNewProduct() {
                         <label className="input-floating-label">Category</label>
                     </div>
 
-                    <div className="input-floating w-96">
+                    <div className="input-floating w-70 md:w-96">
                         <input
                             type="text"
                             placeholder="Weight"
@@ -246,7 +245,7 @@ export default function AddNewProduct() {
                     <p>Description: </p>
 
                     <ReactQuill
-                        className="w-100"
+                        className="w-70 md:w-100"
                         theme="snow"
                         id="description"
                         value={product.description}
@@ -258,11 +257,9 @@ export default function AddNewProduct() {
 
                 </div>
 
-                <div className="w-5/12">
+                <div className="w-auto md:w-5/12">
 
-
-
-                    <div className="flex flex-wrap gap-5 justify-center items-center px-10">
+                    <div className="flex flex-wrap gap-2 justify-center items-center px-5 md:px-10">
 
                         {
                             [0, 1, 2, 3].map((i) => (

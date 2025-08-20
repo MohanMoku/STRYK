@@ -70,9 +70,9 @@ export default function ProductCard({ product }) {
     }
 
     return (
-        <div className="w-50 rounded-2xl h-auto overflow-hidden flex flex-col justify-center hover:translate-x-1 transition-all duration-300">
+        <div className="w-60 md:w-70 rounded-2xl h-auto overflow-hidden flex flex-col justify-center hover:translate-x-1 transition-all duration-300">
 
-            <div className="relative h-50">
+            <div className="relative h-40 lg:h-50">
                 <Carousel>
                     {product.images?.map((img, index) => (
                         <div
@@ -98,7 +98,7 @@ export default function ProductCard({ product }) {
             </div>
 
 
-            <div className="bg-gray-600 p-2 flex flex-col items-center gap-2 rounded-b-2xl">
+            <div className="bg-gray-600 p-2 h-40 flex flex-col items-center gap-2 rounded-b-2xl">
                 <div className="w-full">
                     <h3 className="font-bold text-1xl text-green-400">{product.name}</h3>
                     <h3 className="font-bold text-1xl text-green-400">{product.year}</h3>

@@ -41,13 +41,15 @@ export default function Products() {
 
     return (
 
-        <div className="flex items-center justify-between flex-wrap px-5 py-5">
+        <div className="flex w-full flex-col md:flex-row items-center justify-center md:justify-around md:flex-wrap px-5 py-5">
 
             {
                 productsList?.map((product, index) => (
-                    <div className="m-4" key={index}>
-                        <ProductCard product={product} />
-                    </div>
+                    <>
+                        <div className="m-4 flex items-center  justify-center" key={index}>
+                            <ProductCard product={product} />
+                        </div>
+                    </>
                 ))
             }
 

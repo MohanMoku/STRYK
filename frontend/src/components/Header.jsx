@@ -46,7 +46,6 @@ export default function Header() {
                 showToastMessage("Something went wrong")
                 setLoading(false)
             }
-
         }
 
         if (currentUser) {
@@ -57,40 +56,62 @@ export default function Header() {
     }, [])
 
     return (
-        <header className="h-16 flex justify-between items-center px-6 m-2 rounded-2xl bg-gray-800">
-            <Link to="/">
-                <img src="/vite.svg" alt="Logo" className="h-8" />
+        <header
+            className="flex px-4 sm:px-6 lg:px-10 sm:h-auto lg:h-16 m-2 w-full rounded-2xl bg-gray-900 items-center justify-between"
+        >
+            {/* Logo */}
+            <Link to="/" className="flex items-center">
+                <img
+                    src="https://res.cloudinary.com/db7hvuhnt/image/upload/v1755681813/Picsart_25-08-19_22-12-32-714_1_ozvau0.png"
+                    alt="Logo"
+                    className="h-[60px] sm:h-14 md:h-16 lg:h-20 w-auto cursor-pointer"
+                />
             </Link>
-            <h1 className="text-5xl font-bold bg-gradient-to-bl from-yellow-200 via-yellow-400 to-yellow-600 bg-clip-text text-transparent animate-shine drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]">
+
+            {/* Title */}
+            <span
+                className=" text-center
+    text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold 
+    bg-clip-text text-transparent 
+    animate-shine 
+    drop-shadow-[0_0_10px_rgba(255,255,255,0.7)]
+    inline-block
+  "
+            >
                 STRYK
-            </h1>
+            </span>
 
-            <Link to="/profile/user">
 
-                {
-                    currentUser ?
-
-                        <img src={currentUser.dpUri} alt="Profile Picture" className="overflow-hidden border-2 border-white rounded-full p-1 cursor-pointer w-10 h-10" />
-                        :
-                        <FaPowerOff className="w-10 h-10 text-white text-3xl border-2 border-white rounded-full p-1 cursor-pointer hover:border-red-500 hover:text-red-500 transition-all duration-300" />
-                }
+            {/* Profile / Login Icon */}
+            <Link to="/profile/user" className="flex items-center">
+                {currentUser ? (
+                    <img
+                        src={currentUser.dpUri}
+                        alt="Profile Picture"
+                        className="w-[40px] h-[40px] sm:w-12 sm:h-12 border-2 border-white rounded-full p-1 cursor-pointer"
+                    />
+                ) : (
+                    <FaPowerOff
+                        className="w-[40px] h-[40px] sm:w-12 sm:h-12 text-white border-2 border-white rounded-full p-1 cursor-pointer 
+                     hover:border-red-500 hover:text-red-500 transition-all duration-300"
+                    />
+                )}
             </Link>
 
-            {
-                loading && (
-                    <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
-                        <Spinner color="success" aria-label="Loading" size="xl" />
-                    </div>
-                )
-            }
-            {
-                showMessage && (
-                    <div className="fixed bottom-4 right-4 bg-gray-400 text-black px-4 py-2 rounded shadow-lg">
-                        {message}
-                    </div>
+            {/* Loading Spinner */}
+            {loading && (
+                <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
+                    <Spinner color="success" aria-label="Loading" size="xl" />
+                </div>
+            )}
 
-                )
-            }
+            {/* Flash Message */}
+            {showMessage && (
+                <div className="fixed bottom-4 right-4 bg-gray-400 text-black px-4 py-2 rounded shadow-lg">
+                    {message}
+                </div>
+            )}
         </header>
     );
+
 }

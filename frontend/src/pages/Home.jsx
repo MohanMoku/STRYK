@@ -1,62 +1,84 @@
 import Footer from "../components/Footer";
-import bgImage from "../assets/bgImage.avif";
 import { NavLink } from "react-router-dom";
 
 export default function Home() {
+
+    const bgImage =
+        "https://res.cloudinary.com/db7hvuhnt/image/upload/v1755710658/photo-1574629810360-7efbbe195018_df6lrd.avif"; // Stadium background image
+
+    const featured = [
+        {
+            title: "Club Passion",
+            desc: "Rep your Club. Wear the colors with pride.",
+            img: "https://res.cloudinary.com/db7hvuhnt/image/upload/v1755708369/BAR%C3%87A_Attitude_2_s4cpue.jpg",
+        },
+        {
+            title: "For the Nation",
+            desc: "From the streets to the world stage",
+            img: "https://res.cloudinary.com/db7hvuhnt/image/upload/v1755708932/69b8840177eb61417fbead6345cd05f3_1_tb8d2s.jpg",
+        },
+        {
+            title: "Retro Legacy",
+            desc: "Legends never fade. Jersey that tell history",
+            img: "https://res.cloudinary.com/db7hvuhnt/image/upload/v1755709354/676f98caf66a69166117b7298d5420c3_1_djcwui.jpg",
+        },
+    ];
+
     return (
         <div className="overflow-hidden">
+            {/* Hero Section */}
             <div
                 style={{
                     backgroundImage: `url(${bgImage})`,
-                    backgroundColor: "rgba(0, 0, 0, 0.4)",
-                    backgroundBlendMode: "overlay"
+                    backgroundColor: "rgba(0, 0, 0, 0.6)",
+                    backgroundBlendMode: "overlay",
                 }}
-                className="bg-cover bg-center w-full h-[90vh]  px-60 py-20 overflow-auto scroll-hidden">
-
-                <h1 className="text-center text-6xl font-extrabold text-green-500 mb-10">PLAY BOLD</h1>
-                <div className="">
-
-                    <div className="card group hover:shadow-sm rounded-2xl w-80">
-                        <figure>
-                            <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Shoes" className="transition-transform duration-500 group-hover:scale-110" />
-                        </figure>
-                        <div className="card-body bg-gray-700 rounded-b-2xl">
-                            <h5 className="card-title mb-2.5">The Spirit of the Game</h5>
-                            <p className="mb-6">Football isn’t just a game, it’s a way of life.</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="flex justify-end">
-
-                    <div className="card group hover:shadow-sm rounded-2xl w-80">
-                        <figure>
-                            <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Shoes" className="transition-transform duration-500 group-hover:scale-110" />
-                        </figure>
-                        <div className="card-body bg-gray-700 rounded-b-2xl">
-                            <h5 className="card-title mb-2.5">Play with Heart</h5>
-                            <p className="mb-6">Play with passion, win with pride.</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="">
-
-                    <div className="card group hover:shadow-sm rounded-2xl w-80">
-                        <figure>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbJ3a_78gPV9sCd_70k4lV3Yz7ivI2M8V0LL9m7WiOLR0CB-qOT0za3d-Ly2Jvg4Nw1HA&usqp=CAU" alt="Shoes" className="transition-transform w-full duration-500 group-hover:scale-110" />
-                        </figure>
-                        <div className="card-body bg-gray-700 rounded-b-2xl">
-                            <h5 className="card-title mb-2.5">Every Kick Counts</h5>
-                            <p className="mb-6">Every kick tells a story.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="flex items-center justify-center p-10">
-                <NavLink to={"/products"} className="btn btn-success text-2xl font-bold">Shop Now</NavLink>
-                </div>
-
+                className="bg-cover bg-center w-full h-[70vh] md:h-[90vh] flex flex-col justify-center items-center text-center px-4 md:px-6"
+            >
+                <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-yellow-400 drop-shadow-lg">
+                    STRYK
+                </h1>
+                <p className="text-base sm:text-lg md:text-2xl text-gray-200 mt-3 md:mt-4 max-w-md md:max-w-xl px-2">
+                    Where the game meets Culture
+                </p>
+                <a
+                    href="/products"
+                    className="mt-6 md:mt-8 bg-green-500 hover:bg-green-600 text-white px-6 md:px-8 py-2 md:py-3 rounded-xl font-bold text-base md:text-lg transition"
+                >
+                    Shop Now
+                </a>
             </div>
+
+            {/* Featured Products */}
+            <div className="py-12 sm:py-16 px-4 sm:px-6 md:px-20 bg-[#000000]/60">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12 text-yellow-400">
+                    Football Jerseys for the Bold.
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
+                    {featured.map((item, idx) => (
+                        <div
+                            key={idx}
+                            className="rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition group bg-gray-800"
+                        >
+                            <div className="overflow-hidden">
+                                <img
+                                    src={item.img}
+                                    alt={item.title}
+                                    className="w-full h-48 sm:h-56 md:h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                                />
+                            </div>
+                            <div className="p-4 sm:p-6">
+                                <h5 className="font-bold text-lg sm:text-xl mb-2 text-white">{item.title}</h5>
+                                <p className="text-gray-300 text-sm sm:text-base">{item.desc}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Footer */}
             <Footer />
         </div>
+
     );
 }

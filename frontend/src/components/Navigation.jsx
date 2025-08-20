@@ -7,7 +7,7 @@ import { FaPeopleGroup } from "react-icons/fa6";
 
 export default function Navigation() {
     return (
-        <footer className="flex items-center justify-around h-16 rounded-2xl bg-gray-800 m-2">
+        <footer className="flex items-center justify-around h-14 rounded-2xl bg-gray-900 m-2">
             <NavLink
                 to="/"
                 className={({ isActive }) =>

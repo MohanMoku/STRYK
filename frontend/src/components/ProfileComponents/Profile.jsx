@@ -19,20 +19,20 @@ export default function Profile() {
     return (
         <div className="flex items-center justify-center overflow-auto">
 
-            <div className="w-200 flex items-center justify-center flex-col gap-2">
+            <div className="w-auto md:w-200 flex items-center justify-center flex-col gap-2">
 
-                <img src={dpUri} alt="img" className="rounded-full w-35 h-35 m-10" />
+                <img src={dpUri} alt="img" className="rounded-full w-30 md:w-35 md:h-35 m-10" />
 
-                <h1 className="border w-105 px-5 h-10.5 py-2 text-center rounded-2xl">{name}</h1>
-                <h2 className="border w-105 px-5 h-10.5 py-2 text-center rounded-2xl">{email}</h2>
+                <h1 className="border w-70 md:w-105 px-5 h-10.5 py-2 text-center rounded-2xl">{name}</h1>
+                <h2 className="border w-70 md:w-105 px-5 h-10.5 py-2 text-center rounded-2xl">{email}</h2>
                 {
-                    dob === "DOB" ? <h2 className="border w-105 px-5 h-10.5 py-2 text-center rounded-2xl">{dob}</h2> : <h2 className="border w-105 px-5 h-10.5 py-2 text-center rounded-2xl">{new Date(dob).toLocaleDateString('en-IN')}</h2>
+                    dob === "DOB" ? <h2 className="border w-70 md:w-105 px-5 h-10.5 py-2 text-center rounded-2xl">{dob}</h2> : <h2 className="border w-70 md:w-105 px-5 h-10.5 py-2 text-center rounded-2xl">{new Date(dob).toLocaleDateString('en-IN')}</h2>
                 }
-                <div className="flex gap-5">
+                <div className="flex gap-2 md:gap-5 flex-col md:flex-row">
                     <h2 className="border w-50 h-10.5 px-5 py-2 text-center rounded-2xl">{phone1}</h2>
                     <h2 className="border w-50 px-5 h-10.5 py-2 text-center rounded-2xl">{phone2}</h2>
                 </div>
-                <p className="border w-105 px-5 h-20 py-2 text-center rounded-2xl">{address}</p>
+                <p className="border w-80 md:w-105 px-5 h-20 py-2 text-center rounded-2xl">{address}</p>
 
                 <Link to={'/profile/edit-profile'} className="flex items-center justify-center mt-12 py-2 px-5 rounded-3xl bg-blue-500 gap-2 hover:bg-amber-400 hover:text-black">
                     <MdEdit className="text-2xl" /><span className="font-bold">Edit</span>

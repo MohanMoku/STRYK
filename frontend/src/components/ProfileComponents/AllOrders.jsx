@@ -1,15 +1,16 @@
 import { Modal, ModalBody, ModalHeader, Spinner } from "flowbite-react"
 import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
 
 export default function AllOrders() {
 
     const [orders, setOrders] = useState([])
     const [openModal, setOpenModal] = useState(false)
-    const [productIndex, setProductIndex] = useState()
+    const [productIndex, setProductIndex] = useState(null)
     const [updateStatus, setUpdateStatus] = useState("")
     const [otpError, setOtpError] = useState(false)
     const [otp, setOtp] = useState("")
-
+    const currentUser = useSelector((state) => state.user.currentUser);
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState("")
     const [showMessage, setShowMessage] = useState(false)
@@ -59,16 +60,17 @@ export default function AllOrders() {
                 },
                 body: JSON.stringify({
                     orderId: orders[productIndex]._id,
-                    status: updateStatus
+                    status: updateStatus,
+                    email: currentUser.email,
+                    name: currentUser.name
                 }),
             })
 
             if (!res.ok) throw new Error("Not Updated")
             setLoading(false)
             showToastMessage("Status Updated Successfully")
-
-            // const data = await res.json()
-
+            setOpenModal(false)
+            window.location.reload()
         } catch (error) {
             console.log(error);
             showToastMessage("Something went wrong")
@@ -95,15 +97,18 @@ export default function AllOrders() {
                 },
                 body: JSON.stringify({
                     orderId: orders[productIndex]._id,
-                    status: "Delivered"
+                    status: "Delivered",
+                    email: currentUser.email,
+                    name: currentUser.name
                 }),
             })
 
             if (!res.ok) throw new Error("Not Updated");
-            
+
             setLoading(false)
             showToastMessage("Status Updated Successfully")
-
+            setOpenModal(false)
+            window.location.reload()
             // const data = await res.json()
 
         } catch (error) {
@@ -117,7 +122,8 @@ export default function AllOrders() {
     if (orders.length === 0) return <h1>No Orders</h1>;
 
     return (
-        <div>
+        <div className="pt-10 lg:pt-0">
+            <h1 className="fixed top-20 left-30 text-red-500 md:hidden">make horizontal view</h1>
             <table className="table w-full text-center">
                 <thead>
                     <tr className="border-b">
@@ -165,12 +171,12 @@ export default function AllOrders() {
                 </tbody>
             </table>
 
-            <Modal show={openModal} size="sm" onClose={() => { setOpenModal(false); setOtpError(false); setOtp("") }} popup>
+            <Modal show={openModal} size="4xl" onClose={() => { setOpenModal(false); setOtpError(false); setOtp("") }} popup>
                 <ModalHeader />
                 <ModalBody className="flex items-center gap-5 justify-center">
-                    <div className="flex flex-col items-center gap-5 border-r pr-5">
+                    <div className="flex flex-col items-center gap-5 border-r pr-5 ">
                         <h1>Update Status</h1>
-                        <select className="select h-10" id="selectFloating" onChange={(e) => setUpdateStatus(e.target.value)} value={updateStatus}>
+                        <select className="select h-10 w-80" id="selectFloating" onChange={(e) => setUpdateStatus(e.target.value)} value={updateStatus}>
                             <option>Pending</option>
                             <option>Processing</option>
                             <option>Shipped</option>
@@ -179,13 +185,24 @@ export default function AllOrders() {
                         <button className="btn btn-outline w-20 h-8" onClick={upDateStatus}>Submit</button>
                     </div>
 
-                    <div className="flex flex-col items-center gap-5">
+                    <div className="flex flex-col items-center gap-5 border-r pr-5">
                         <h1>Product Delivery</h1>
                         <input type="text" className="input" placeholder="Enter OTP" style={{ border: otpError ? "red 1px solid" : "" }} value={otp} onChange={(e) => setOtp(e.target.value)} />
                         <button className="btn btn-outline w-20 h-8" onClick={checkOnDelivery}>Submit</button>
                     </div>
 
                     {/* <button className="btn btn-error disabled:cursor-not-allowed" disabled={returnMsg.trim() === ""} onClick={sendReturnRequest}>Submit</button> */}
+
+                    {productIndex !== null && <div className="">
+                        <h1>Shipping Details</h1>
+                        <br />
+                        {orders[productIndex].userName}
+                        <br />
+                        {orders[productIndex].userPhone}
+                        <br />
+                        {orders[productIndex].shippingAddress}
+                    </div>}
+
                 </ModalBody>
             </Modal>
 

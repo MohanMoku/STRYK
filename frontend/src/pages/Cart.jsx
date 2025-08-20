@@ -40,8 +40,14 @@ export default function Cart() {
     return (
         <div className="flex flex-col items-center">
             <h1 className="text-center text-teal-600 text-3xl font-bold">CART ITEMS</h1>
-            <div className="flex items-center flex-wrap px-5 py-5">
 
+            {
+                cartProduct?.length > 0 ?
+                    <NavLink to={`/orderCart`} className="btn btn-success w-40 md:hidden">PLACE ORDER</NavLink> :
+                    <h1 className="md:hidden">No cart Items</h1>
+            }
+
+            <div className="flex items-center justify-around flex-col md:flex-row md:flex-wrap px-5 py-5">
                 {
                     cartProduct?.map((product, index) => (
                         <div className="m-4" key={index}>
@@ -50,7 +56,11 @@ export default function Cart() {
                     ))
                 }
             </div>
-            <NavLink to={`/orderCart`} className="btn btn-success w-40">PLACE ORDER</NavLink>
+            {
+                cartProduct?.length > 0 ?
+                    <NavLink to={`/orderCart`} className="btn btn-success w-40">PLACE ORDER</NavLink> :
+                    <h1>No cart Items</h1>
+            }
 
             {
                 loading && (

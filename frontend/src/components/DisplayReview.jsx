@@ -50,15 +50,15 @@ export default function DisplayReview({ id }) {
         <>
             {reviews.length > 0 &&
                 reviews.map((review, index) =>
-                    <div className="flex items-center gap-2 p-4 border-b border-gray-500" key={index}>
-                        <img src={review.dpUri} alt="img" className="w-18 h-18 rounded-full object-cover" />
-                        <div className="flex flex-col gap-1 w-80">
+                    <div className="flex items-center mx-2 gap-1 md:gap-2 p-4 border-b border-gray-500 justify-center" key={index}>
+                        <img src={review.dpUri} alt="img" className="w-10 h-10 md:w-18 md:h-18 rounded-full object-cover" />
+                        <div className="flex flex-col gap-1 w-60 md:w-80">
                             <h1 className="text-white text-xl">{review.name}</h1>
                             <p>{review.comment}</p>
                         </div>
                         <div className="flex items-center gap-1">
-                            <FaStar className="text-yellow-400 text-2xl" />
-                            <p className="text-white text-xl">{review.rating}</p>
+                            <FaStar className="text-yellow-400 text-xl md:text-2xl" />
+                            <p className="text-white text-1xl md:text-xl">{review.rating}</p>
                         </div>
                     </div>
                 )

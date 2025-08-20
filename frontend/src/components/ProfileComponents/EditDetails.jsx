@@ -8,6 +8,7 @@ const EditDetails = () => {
 
     const [message, setMessage] = useState("")
     const [showMessage, setShowMessage] = useState(false)
+    const [showUpdateMsg, setShowUpdateMsg] = useState(false)
 
     const showToastMessage = (msg) => {
         setMessage(msg);
@@ -35,6 +36,12 @@ const EditDetails = () => {
     useEffect(() => {
         if (currentUser) {
             setUserData(prev => ({ ...prev, ...currentUser }));
+        }
+        if (currentUser.phone1 === "" || currentUser.address === "") {
+            setShowUpdateMsg(true)
+            setTimeout(() => {
+                setShowUpdateMsg(false);
+            }, 3500);
         }
     }, [currentUser]);
 
@@ -165,8 +172,8 @@ const EditDetails = () => {
 
     return (
         <div className="flex items-center justify-center overflow-auto">
-            <div className="w-200 flex p-5 items-center justify-center flex-col gap-2">
-                <img src={userData.dpUri} alt="img" className="rounded-full w-35 h-35 mt-2" />
+            <div className="w-auto md:w-200 flex p-5 items-center justify-center flex-col gap-2">
+                <img src={userData.dpUri} alt="img" className="rounded-full w-25 h-25 md:w-35 md:h-35 mt-2" />
 
                 <label className='btn btn-accent mb-2 cursor-pointer'>
                     Change Image
@@ -181,7 +188,7 @@ const EditDetails = () => {
                 <input
                     type="text"
                     placeholder="Name"
-                    className="input text-center bg-transparent w-105"
+                    className="input text-center bg-transparent w-70 md:w-105"
                     id="name"
                     name="name"
                     value={userData.name}
@@ -190,7 +197,7 @@ const EditDetails = () => {
                 <input
                     type="text"
                     placeholder="Email"
-                    className="input text-center bg-transparent w-105"
+                    className="input text-center bg-transparent w-70 md:w-105"
                     id="email"
                     name="email"
                     value={userData.email}
@@ -199,13 +206,13 @@ const EditDetails = () => {
                 <input
                     type="date"
                     placeholder="DOB"
-                    className="input text-center bg-transparent w-105"
+                    className="input text-center bg-transparent w-70 md:w-105"
                     id="dob"
                     name="dob"
                     value={userData.dob}
                     onChange={handleChange}
                 />
-                <div className="flex gap-5">
+                <div className="flex gap-2 md:gap-5 flex-col md:flex-row">
                     <input
                         type="number"
                         placeholder="phone1"
@@ -227,13 +234,13 @@ const EditDetails = () => {
                 </div>
 
                 <textarea
-                    className="textarea bg-transparent w-105"
+                    className="textarea bg-transparent w-70 md:w-105"
                     placeholder="address"
                     name="address"
                     value={userData.address}
                     onChange={handleChange}
                 ></textarea>
-                <button className=' w-auto px-5 btn btn-accent' onClick={getUserLocation}><MdMyLocation size={25} />Get Location</button>
+                <button className='w-auto px-5 btn btn-accent' onClick={getUserLocation}><MdMyLocation size={25} />Get Location</button>
 
                 <button className="btn btn-primary mt-5" onClick={updateUser}>Update</button>
             </div>
@@ -252,6 +259,14 @@ const EditDetails = () => {
                         {message}
                     </div>
 
+                )
+            }
+
+            {
+                showUpdateMsg && (
+                    <div className="fixed flex items-center justify-center bg-amber-50/80 z-50">
+                        <h1 className='text-center text-2xl font-bold text-red-500'>Make sure updated the phone number and address before ordering</h1>
+                    </div>
                 )
             }
 

@@ -6,21 +6,19 @@ export default function About() {
 
     const founders = [
         {
-            name: "Rohan Kumar",
+            name: "Rohan",
             email: "rohan@example.com",
-            phone: "+91 98765 43210",
+            phone: "+91 6366083048",
             socials: {
-                instagram: "https://instagram.com/rohan_insta",
-                // facebook: "https://facebook.com/rohan.fb"
+                instagram: "https://instagram.com/shop.stryk",
             },
         },
         {
-            name: "Sharma",
+            name: "Nithin",
             email: "mohan@example.com",
-            phone: "+91 98765 56789",
+            phone: "+91 76764402579",
             socials: {
-                instagram: "https://instagram.com/mohan_insta",
-                // facebook: "https://facebook.com/mohan.fb"
+                instagram: "https://instagram.com/shop.stryk",
             },
         },
     ];
@@ -41,13 +39,13 @@ export default function About() {
                 {founders.map((f, idx) => (
                     <div
                         key={idx}
-                        className="bg-white shadow-lg rounded-2xl w-100 p-6 flex flex-col items-center text-center border border-gray-200 hover:shadow-xl transition"
+                        className="bg-white shadow-lg rounded-2xl w-70 md:w-100 p-6 flex flex-col items-center text-center border border-gray-200 hover:shadow-xl transition"
                     >
                         <div className="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl font-bold mb-4">
                             {f.name.charAt(0)}
                         </div>
                         <h2 className="text-xl font-semibold text-gray-800">{f.name}</h2>
-                        <p className="text-gray-600 mb-2">{f.email}</p>
+                        {/* <p className="text-gray-600 mb-2">{f.email}</p> */}
                         <p className="text-gray-600 flex items-center justify-center gap-2 mb-4">
                             <FaPhone className="text-green-500" /> {f.phone}
                         </p>

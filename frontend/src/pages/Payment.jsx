@@ -74,7 +74,8 @@ export default function Payment() {
                     user: {
                         id: currentUser._id,
                         name: currentUser.name,
-                        email: currentUser.email
+                        email: currentUser.email,
+                        phone: currentUser.phone1
                     },
                     paymentMethod,
                     shippingAddress: currentUser.address,
@@ -107,36 +108,36 @@ export default function Payment() {
         )
 
     return (
-        <div className="min-h-[80vh] bg-gradient-to-bl from-slate-900 via-slate-800 to-gray-900 flex items-center flex-col justify-center p-6">
+        <div className="min-h-[80%] bg-gradient-to-bl from-slate-900 via-slate-800 to-gray-900 flex items-center flex-col justify-center p-6">
 
-            <div className="flex pb-4 justify-around w-300 items-center border-b">
-                <div className="flex gap-4">
+            <div className="flex flex-col gap-2 mad:gap-0 md:flex-row pb-4 justify-around md:w-300 items-center border-b">
+                <div className="flex flex-col md:flex-row items-center gap-4 border-b md:border-b-0">
                     <img src={productToDisplay.images[0]} alt={productToDisplay.name} className="w-60 h-60 object-cover rounded-xl" />
                     <div>
-                        <h2 className="text-3xl font-bold">{productToDisplay.name}</h2>
-                        <p className="font-semibold text-2xl">₹{(100 - productToDisplay.offer) * productToDisplay.price / 100}</p>
-                        <p className="font-semibold text-xl">Size: {size}</p>
-                        <p className="font-semibold text-xl">Stock left: {stock}</p>
+                        <h2 className="text-xl md:text-3xl font-bold">{productToDisplay.name}</h2>
+                        <p className="font-semibold md:text-2xl">₹{(100 - productToDisplay.offer) * productToDisplay.price / 100}</p>
+                        <p className="font-semibold md:text-xl">Size: {size}</p>
+                        <p className="font-semibold md:text-xl">Stock left: {stock}</p>
                     </div>
                 </div>
 
                 <div className="flex flex-col gap-2 w-80 overflow-clip">
-                    <h3 className="text-3xl font-bold mb-2">Shipping Address</h3>
-                    <p className="text-gray-200 text-2xl font-semibold">Name: {currentUser.name}</p>
-                    <p className="text-gray-200 font-semibold text-1xl w-70 text-wrap"><u>Address</u>: {currentUser.address}</p>
-                    <p className="text-gray-200 font-semibold text-1xl"><u>Phone1</u>: {currentUser.phone1}</p>
-                    <p className="text-gray-200 font-semibold text-1xl"><u>Phone2</u>: {currentUser.phone2}</p>
-                    <p className="text-gray-200 font-semibold text-1xl"><u>Email</u>: {currentUser.email}</p>
+                    <h3 className="text-xl md:text-3xl font-bold mb-2">Shipping Address</h3>
+                    <p className="text-gray-200 md:text-2xl font-semibold">Name: {currentUser.name}</p>
+                    <p className="text-gray-200 font-semibold md:text-1xl md:w-70 text-wrap"><u>Address</u>: {currentUser.address}</p>
+                    <p className="text-gray-200 font-semibold md:text-1xl"><u>Phone1</u>: {currentUser.phone1}</p>
+                    <p className="text-gray-200 font-semibold md:text-1xl"><u>Phone2</u>: {currentUser.phone2}</p>
+                    <p className="text-gray-200 font-semibold md:text-1xl"><u>Email</u>: {currentUser.email}</p>
                 </div>
             </div>
 
-            <div className="flex pb-4 justify-around w-300 items-center mt-4">
+            <div className="flex pb-4 flex-col gap-2 md:gap-0 md:flex-row justify-around md:w-300 items-center mt-4">
 
                 <div className="border-b pb-4">
-                    <h3 className="text-2xl font-bold mb-2">Billing</h3>
+                    <h3 className="text-xl md:text-2xl font-bold mb-2">Billing</h3>
                     <div className="space-y-2">
                         <div className="flex justify-between">
-                            <span className="font-semibold text-xl flex gap-8">{productToDisplay.name} x
+                            <span className="font-semibold text-1xl md:text-xl flex gap-8">{productToDisplay.name} x
 
                                 <span className="flex gap-2 items-center mr-4"><span className="cursor-pointer border rounded-full bg-red-500 text-black" onClick={decreaseStock}>
                                     <TiMinus size={25} /></span><span>{custStock}</span><span className="cursor-pointer border rounded-full bg-green-500 text-black" onClick={increaseStock}>
@@ -190,7 +191,7 @@ export default function Payment() {
                 </div>
             </div>
 
-            <button className="w-100 mt-4 text-lg py-4 rounded-2xl bg-green-600 disabled:cursor-not-allowed text-white hover:bg-green-700" disabled={custStock === 0} onClick={placeOrder}>
+            <button className="w-full md:w-100 mt-4 text-lg py-4 rounded-2xl bg-green-600 disabled:cursor-not-allowed text-white hover:bg-green-700" disabled={custStock === 0} onClick={placeOrder}>
                 Pay Now
             </button>
 

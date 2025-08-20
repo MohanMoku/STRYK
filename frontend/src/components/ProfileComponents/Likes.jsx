@@ -40,8 +40,8 @@ export default function Likes() {
     }, [])
 
     return (
-        <div>
-
+        <div className="pt-10 lg:pt-0">
+            <h1 className="fixed top-20 left-30 text-red-500 md:hidden">make horizontal view</h1>
             <table className="table">
                 <thead>
                     <tr>

@@ -35,7 +35,7 @@ export default function ProfileSideBar() {
 
     return (
 
-        <div className="h-auto flex justify- flex-col items-center p-5">
+        <div className="h-auto flex justify- flex-col items-center p-5 bg-transparent">
             <div className="flex items-center flex-col gap-5">
                 <NavLink to="/profile/user" className={({ isActive }) =>
                     `btn w-55 ${!isActive ? "btn-outline" : "btn-gradient btn-secondary"}`
