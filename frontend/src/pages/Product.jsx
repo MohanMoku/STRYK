@@ -45,11 +45,9 @@ export default function Product() {
                 const res = await fetch(`/api/product/getProduct/?id=${id}`)
                 const data = await res.json()
                 setProductToDisplay(data.product)
-                setIsUserLiked(data.product.likedBy.includes(currentUser._id))
-                setProductInCart(currentUser.cart.includes(data.product._id))
-                console.log(data.product.likesCount);
-                
-                setLikeValue(data.product.likesCount)
+
+                setIsUserLiked(currentUser ? data.product.likedBy.includes(currentUser._id) : false)
+                setProductInCart(currentUser ? currentUser.cart.includes(data.product._id) : false)
 
                 const res1 = await fetch(`/api/product/search?query=${data.product.name.split(" ")[0] + " " + data.product.year}`)
                 if (!res1.ok) {

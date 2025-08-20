@@ -35,10 +35,10 @@ export default function Home() {
                 }}
                 className="bg-cover bg-center w-full h-[70vh] md:h-[90vh] flex flex-col justify-center items-center text-center px-4 md:px-6"
             >
-                <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-yellow-400 drop-shadow-lg">
+                <h1 className="text-6xl sm:text-5xl md:text-6xl font-extrabold text-yellow-400 drop-shadow-lg">
                     STRYK
                 </h1>
-                <p className="text-base sm:text-lg md:text-2xl text-gray-200 mt-3 md:mt-4 max-w-md md:max-w-xl px-2">
+                <p className="text-base sm:text-lg md:text-3xl text-gray-200 mt-3 md:mt-4 max-w-md md:max-w-xl px-2">
                     Where the game meets Culture
                 </p>
                 <a
@@ -58,14 +58,16 @@ export default function Home() {
                     {featured.map((item, idx) => (
                         <div
                             key={idx}
-                            className="rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition group bg-gray-800"
+                            className="rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition group bg-gray-800 min-h-[380px] sm:min-h-[420px]"
                         >
+
                             <div className="overflow-hidden">
                                 <img
                                     src={item.img}
                                     alt={item.title}
-                                    className="w-full h-48 sm:h-56 md:h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                                    className="w-full h-60 sm:h-72 md:h-80 object-cover transition-transform duration-500 group-hover:scale-110"
                                 />
+
                             </div>
                             <div className="p-4 sm:p-6">
                                 <h5 className="font-bold text-lg sm:text-xl mb-2 text-white">{item.title}</h5>

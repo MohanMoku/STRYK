@@ -57,7 +57,7 @@ export default function Header() {
 
     return (
         <header
-            className="flex px-4 sm:px-6 lg:px-10 sm:h-auto lg:h-16 m-2 w-full rounded-2xl bg-gray-900 items-center justify-between"
+            className="flex px-4 sm:px-6 lg:px-10 sm:h-auto lg:h-16 m-2 w-auto rounded-2xl bg-gray-900 items-center justify-between"
         >
             {/* Logo */}
             <Link to="/" className="flex items-center">
@@ -69,7 +69,7 @@ export default function Header() {
             </Link>
 
             {/* Title */}
-            <span
+            {/* <span
                 className=" text-center
     text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-bold 
     bg-clip-text text-transparent 
@@ -79,7 +79,7 @@ export default function Header() {
   "
             >
                 STRYK
-            </span>
+            </span> */}
 
 
             {/* Profile / Login Icon */}

@@ -45,11 +45,9 @@ export default function Products() {
 
             {
                 productsList?.map((product, index) => (
-                    <>
                         <div className="m-4 flex items-center  justify-center" key={index}>
                             <ProductCard product={product} />
                         </div>
-                    </>
                 ))
             }
 

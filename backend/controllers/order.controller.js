@@ -25,15 +25,8 @@ export const placeOrder = async (req, res, next) => {
         //         { $inc: { stock: -item.quantity } }
         //     );
         // }
-        for (let item of items) {
-            await Product.findByIdAndUpdate(
-                item.product,
-                { $inc: { [`stock.${item.size}`]: -item.quantity } }
-            );
-        }
-
+        
         const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
-
         const user1 = await User.findById(user.id);
         const newOrder = new Order({
             user: user.id,
@@ -48,7 +41,13 @@ export const placeOrder = async (req, res, next) => {
         await newOrder.save();
         user1.orders.push(newOrder._id);
         await user1.save();
-
+        
+        for (let item of items) {
+            await Product.findByIdAndUpdate(
+                item.product,
+                { $inc: { [`stock.${item.size}`]: -item.quantity } }
+            );
+        }
         const deliveryCharge = newOrder.totalAmount > 999 ? 0 : 40;
         const grandTotal = newOrder.totalAmount + deliveryCharge;
 
