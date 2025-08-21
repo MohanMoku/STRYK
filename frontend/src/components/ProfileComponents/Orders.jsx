@@ -81,7 +81,7 @@ export default function Orders() {
     }
 
     if (orders.length === 0) {
-        return <h1>No Orders</h1>
+        return <h1 className="fixed top-40">No Orders</h1>
     }
 
     return (

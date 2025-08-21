@@ -100,7 +100,7 @@ export default function ManageUsers() {
                 dob: "DOB",
                 phone1: "Phone 1",
                 phone2: "Phone 2",
-                address: "Add Details",
+                address: "Add Address",
                 dpUri: "https://tse2.mm.bing.net/th/id/OIP.3wq2ORmQZGjLR_QM0-VojgHaHA?rs=1&pid=ImgDetMain&o=7&rm=3"
             }, ...allUsers[index]
         })
@@ -162,25 +162,25 @@ export default function ManageUsers() {
                 </tbody>
             </table>
 
-            <Modal show={openModal} size="xl" onClose={() => setOpenModal(false)} popup>
+            <Modal show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
                 <ModalHeader />
                 <ModalBody>
                     <div className="flex items-center justify-center flex-col gap-2">
 
                         <img src={user.dpUri} alt="img" className="rounded-full w-35 h-35 m-10" />
 
-                        <h1 className="border w-105 px-5 h-10.5 py-2 text-center rounded-2xl">{user.name}</h1>
-                        <h2 className="border w-105 px-5 h-10.5 py-2 text-center rounded-2xl">{user.email}</h2>
+                        <h1 className="border w-50 md:w-105 px-5 h-10.5 py-2 text-center rounded-2xl">{user.name}</h1>
+                        <h2 className="border w-80 md:w-105 px-5 h-10.5 py-2 text-center rounded-2xl">{user.email}</h2>
                         {
                             user.dob === "DOB" ?
-                                <h2 className="border w-105 px-5 h-10.5 py-2 text-center rounded-2xl">{user.dob}</h2> :
-                                <h2 className="border w-105 px-5 h-10.5 py-2 text-center rounded-2xl">{new Date(user.dob).toLocaleDateString('en-IN')}</h2>
+                                <h2 className="border w-50 md:w-105 px-5 h-10.5 py-2 text-center rounded-2xl">{user.dob}</h2> :
+                                <h2 className="border w-50 md:w-105 px-5 h-10.5 py-2 text-center rounded-2xl">{new Date(user.dob).toLocaleDateString('en-IN')}</h2>
                         }
-                        <div className="flex gap-5">
+                        <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-5">
                             <h2 className="border w-50 h-10.5 px-5 py-2 text-center rounded-2xl">{user.phone1}</h2>
                             <h2 className="border w-50 px-5 h-10.5 py-2 text-center rounded-2xl">{user.phone2}</h2>
                         </div>
-                        <p className="border w-105 px-5 h-20 py-2 text-center rounded-2xl">{user.address}</p>
+                        <p className="border w-70 md:w-105 px-5 h-auto py-2 text-center rounded-2xl">{user.address}</p>
 
                     </div>
                 </ModalBody>

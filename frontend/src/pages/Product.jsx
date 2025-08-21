@@ -48,7 +48,7 @@ export default function Product() {
 
                 setIsUserLiked(currentUser ? data.product.likedBy.includes(currentUser._id) : false)
                 setProductInCart(currentUser ? currentUser.cart.includes(data.product._id) : false)
-
+                setLikeValue(data.product.likesCount)
                 const res1 = await fetch(`/api/product/search?query=${data.product.name.split(" ")[0] + " " + data.product.year}`)
                 if (!res1.ok) {
                     throw new Error(res1.statusText)

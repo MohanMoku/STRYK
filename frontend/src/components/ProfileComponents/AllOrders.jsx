@@ -173,10 +173,10 @@ export default function AllOrders() {
 
             <Modal show={openModal} size="4xl" onClose={() => { setOpenModal(false); setOtpError(false); setOtp("") }} popup>
                 <ModalHeader />
-                <ModalBody className="flex items-center gap-5 justify-center">
-                    <div className="flex flex-col items-center gap-5 border-r pr-5 ">
+                <ModalBody className="flex flex-col md:flex-row items-center gap-5 justify-center">
+                    <div className="flex flex-col w-70 md:w-auto items-center gap-5 md:border-r pr-5 border-b pb-4 md:border-b-0 md:pb-0">
                         <h1>Update Status</h1>
-                        <select className="select h-10 w-80" id="selectFloating" onChange={(e) => setUpdateStatus(e.target.value)} value={updateStatus}>
+                        <select className="select h-10 w-auto md:w-80" id="selectFloating" onChange={(e) => setUpdateStatus(e.target.value)} value={updateStatus}>
                             <option>Pending</option>
                             <option>Processing</option>
                             <option>Shipped</option>
@@ -185,7 +185,7 @@ export default function AllOrders() {
                         <button className="btn btn-outline w-20 h-8" onClick={upDateStatus}>Submit</button>
                     </div>
 
-                    <div className="flex flex-col items-center gap-5 border-r pr-5">
+                    <div className="flex flex-col items-center gap-5 border-b pb-4 md:pb-0 md:border-b-0 md:border-r pr-5">
                         <h1>Product Delivery</h1>
                         <input type="text" className="input" placeholder="Enter OTP" style={{ border: otpError ? "red 1px solid" : "" }} value={otp} onChange={(e) => setOtp(e.target.value)} />
                         <button className="btn btn-outline w-20 h-8" onClick={checkOnDelivery}>Submit</button>
@@ -193,7 +193,7 @@ export default function AllOrders() {
 
                     {/* <button className="btn btn-error disabled:cursor-not-allowed" disabled={returnMsg.trim() === ""} onClick={sendReturnRequest}>Submit</button> */}
 
-                    {productIndex !== null && <div className="">
+                    {productIndex !== null && <div className="flex flex-col items-center">
                         <h1>Shipping Details</h1>
                         <br />
                         {orders[productIndex].userName}

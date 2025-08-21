@@ -28,7 +28,7 @@ export default function About() {
             <h1 className="text-5xl font-bold text-green-600 mb-6">About Us</h1>
 
             <p className="max-w-3xl text-center text-lg text-gray-50 mb-12 leading-relaxed">
-                Our journey started with just an idea — three college friends sitting in a classroom,
+                Our journey started with just an idea — Two college friends sitting in a classroom,
                 dreaming of building something meaningful. That dream turned into this platform.
                 We wanted to make buying football kits and jerseys simple, fun, and reliable.
                 What started as a late-night conversation is now a growing community of football fans
