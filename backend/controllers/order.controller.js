@@ -166,7 +166,9 @@ export const upDateOrderStatus = async (req, res, next) => {
         order.status = status;
         await order.save();
 
-        // const email =
+        console.log('====================================');
+        console.log(email);
+        console.log('====================================');
         const subject = "🎉 Welcome to STRYK Store!";
         const html = `<div style="font-family: Arial, sans-serif; line-height:1.5;">
                             <h2 style="color:#28a745;">✅ Your Order Has Been Delivered!</h2>
