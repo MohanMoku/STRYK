@@ -59,8 +59,8 @@ export default function AllOrders() {
                 body: JSON.stringify({
                     orderId: orders[productIndex]._id,
                     status: updateStatus,
-                    email: orders[productIndex].email,
-                    name: orders[productIndex].name
+                    email: orders[productIndex].userEmail,
+                    name: orders[productIndex].userName
                 }),
             })
 
@@ -96,8 +96,8 @@ export default function AllOrders() {
                 body: JSON.stringify({
                     orderId: orders[productIndex]._id,
                     status: "Delivered",
-                    email: orders[productIndex].email,
-                    name: orders[productIndex].name
+                    email: orders[productIndex].userEmail,
+                    name: orders[productIndex].userName
                 }),
             })
 

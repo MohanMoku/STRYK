@@ -25,7 +25,7 @@ export const placeOrder = async (req, res, next) => {
         //         { $inc: { stock: -item.quantity } }
         //     );
         // }
-        
+
         const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
         const user1 = await User.findById(user.id);
         const newOrder = new Order({
@@ -42,7 +42,7 @@ export const placeOrder = async (req, res, next) => {
         await newOrder.save();
         user1.orders.push(newOrder._id);
         await user1.save();
-        
+
         for (let item of items) {
             await Product.findByIdAndUpdate(
                 item.product,
@@ -160,29 +160,36 @@ export const upDateOrderStatus = async (req, res, next) => {
 
         const { orderId, status, email, name } = req.body;
         const order = await Order.findById(orderId);
+        console.log('====================================');
+        console.log("Here1");
+        console.log('====================================');
 
         if (!order) return next(errorHandler(404, "Order not found"))
-
+        console.log("Here2");
         order.status = status;
         await order.save();
+        console.log("Here3");
 
         console.log('====================================');
         console.log(email);
         console.log('====================================');
         const subject = "🎉 Welcome to STRYK Store!";
         const html = `<div style="font-family: Arial, sans-serif; line-height:1.5;">
-                            <h2 style="color:#28a745;">✅ Your Order Has Been Delivered!</h2>
-                            <p>Hi ${name},</p>
-                            <p>Great news – your order <b>#${order._id}</b> has been <b>successfully delivered</b> 🎉</p>
-                            <p>We hope you enjoy your new gear and show your football passion in style ⚽</p>
-                            <p style="margin-top:15px;">Thank you for shopping with <b>STRYK</b>. Your support means the world to us 💙</p>
-                            <p style="margin-top:25px;">– <b>STRYK Team</b></p>
-                        </div>`;
+        <h2 style="color:#28a745;">✅ Your Order Has Been Delivered!</h2>
+        <p>Hi ${name},</p>
+        <p>Great news – your order <b>#${order._id}</b> has been <b>successfully delivered</b> 🎉</p>
+        <p>We hope you enjoy your new gear and show your football passion in style ⚽</p>
+        <p style="margin-top:15px;">Thank you for shopping with <b>STRYK</b>. Your support means the world to us 💙</p>
+        <p style="margin-top:25px;">– <b>STRYK Team</b></p>
+        </div>`;
 
 
+        console.log("Here5");
+        console.log(status);
         if (status === "Delivered") {
             await mailToUser(email, subject, html);
         }
+        console.log("Here7");
 
         res
             .status(200)
