@@ -37,6 +37,11 @@ const orderSchema = new mongoose.Schema({
         required: true
     },
 
+    userEmail:{
+        type: String,
+        required: true
+    },
+
     userPhone:{
         type: String,
         required: true

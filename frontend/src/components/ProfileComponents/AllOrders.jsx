@@ -1,6 +1,5 @@
 import { Modal, ModalBody, ModalHeader, Spinner } from "flowbite-react"
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
 
 export default function AllOrders() {
 
@@ -10,7 +9,6 @@ export default function AllOrders() {
     const [updateStatus, setUpdateStatus] = useState("")
     const [otpError, setOtpError] = useState(false)
     const [otp, setOtp] = useState("")
-    const currentUser = useSelector((state) => state.user.currentUser);
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState("")
     const [showMessage, setShowMessage] = useState(false)
@@ -61,8 +59,8 @@ export default function AllOrders() {
                 body: JSON.stringify({
                     orderId: orders[productIndex]._id,
                     status: updateStatus,
-                    email: currentUser.email,
-                    name: currentUser.name
+                    email: orders[productIndex].email,
+                    name: orders[productIndex].name
                 }),
             })
 
@@ -98,8 +96,8 @@ export default function AllOrders() {
                 body: JSON.stringify({
                     orderId: orders[productIndex]._id,
                     status: "Delivered",
-                    email: currentUser.email,
-                    name: currentUser.name
+                    email: orders[productIndex].email,
+                    name: orders[productIndex].name
                 }),
             })
 

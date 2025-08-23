@@ -36,7 +36,8 @@ export const placeOrder = async (req, res, next) => {
             shippingAddress,
             otpCode,
             userName: user.name,
-            userPhone: user.phone
+            userPhone: user.phone,
+            userEmail: user.email,
         });
         await newOrder.save();
         user1.orders.push(newOrder._id);
