@@ -160,19 +160,11 @@ export const upDateOrderStatus = async (req, res, next) => {
 
         const { orderId, status, email, name } = req.body;
         const order = await Order.findById(orderId);
-        console.log('====================================');
-        console.log("Here1");
-        console.log('====================================');
 
         if (!order) return next(errorHandler(404, "Order not found"))
-        console.log("Here2");
         order.status = status;
         await order.save();
-        console.log("Here3");
 
-        console.log('====================================');
-        console.log(email);
-        console.log('====================================');
         const subject = "🎉 Welcome to STRYK Store!";
         const html = `<div style="font-family: Arial, sans-serif; line-height:1.5;">
         <h2 style="color:#28a745;">✅ Your Order Has Been Delivered!</h2>
@@ -183,13 +175,9 @@ export const upDateOrderStatus = async (req, res, next) => {
         <p style="margin-top:25px;">– <b>STRYK Team</b></p>
         </div>`;
 
-
-        console.log("Here5");
-        console.log(status);
         if (status === "Delivered") {
             await mailToUser(email, subject, html);
         }
-        console.log("Here7");
 
         res
             .status(200)
