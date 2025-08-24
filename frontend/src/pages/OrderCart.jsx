@@ -76,12 +76,6 @@ export default function OrderCart() {
     };
 
     const placeOrder = async () => {
-        console.log('====================================');
-        console.log(qtyArr.reduce((acc, val) => acc + Number(val), 0))
-        console.log('====================================');
-        console.log('====================================');
-        console.log(qtyArr);
-        console.log('====================================');
         try {
             setLoading(true)
             const res = await fetch("/api/order/placeOrder", {
