@@ -51,7 +51,7 @@ export default function OrderCart() {
         const newStock = cartProducts[i].stock[e.target.value];
 
         if (newQtyArr[i] > newStock) {
-            newQtyArr[i] = newStock > 0 ? newStock : 1;
+            newQtyArr[i] = newStock > 0 ? newStock : 0;
         }
 
         setSizeArr(newSizeArr);
