@@ -31,7 +31,7 @@ export default function OrderCart() {
                 const data = await res.json()
                 setCartProducts(data.cartProducts)
                 setSizeArr(Array(data.cartProducts.length).fill("M"))
-                setQtyArr(Array(data.cartProducts.length).fill(1))
+                setQtyArr(Array(data.cartProducts.length).fill(0))
                 showToastMessage("Fetched Successfully")
                 setLoading(false)
             } catch (error) {
@@ -76,6 +76,12 @@ export default function OrderCart() {
     };
 
     const placeOrder = async () => {
+        console.log('====================================');
+        console.log(qtyArr.reduce((acc, val) => acc + Number(val), 0))
+        console.log('====================================');
+        console.log('====================================');
+        console.log(qtyArr);
+        console.log('====================================');
         try {
             setLoading(true)
             const res = await fetch("/api/order/placeOrder", {
@@ -184,7 +190,7 @@ export default function OrderCart() {
                     {cartProducts.map((product, index) => {
                         const price = ((100 - product.offer) * product.price) / 100;
                         return (
-                            <tr key={index} className="hover:bg-gray-100">
+                            <tr key={index} className="">
                                 <td className="border border-gray-300 px-2 py-1 md:px-4 md:py-2 font-semibold text-base md:text-xl">
                                     {product.name}
                                 </td>
@@ -279,11 +285,11 @@ export default function OrderCart() {
                 </div>
             </div>
             <button
-                className="w-full md:w-100 mt-4 text-lg py-4 rounded-2xl bg-green-600 disabled:cursor-not-allowed text-white hover:bg-green-700"
-                disabled={qtyArr.reduce((sum, qty) => sum + qty, 0) <= 0 || subtotal <= 0}
+                className="w-100 md:w-100 mt-4 text-lg py-4 rounded-2xl bg-green-600 disabled:cursor-not-allowed text-white hover:bg-green-700"
+                disabled={qtyArr.reduce((acc, val) => acc + Number(val), 0) <= 0}
                 onClick={placeOrder}
             >
-                Pay Now
+                Place Order
             </button>
 
             {

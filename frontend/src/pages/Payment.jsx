@@ -191,8 +191,8 @@ export default function Payment() {
                 </div>
             </div>
 
-            <button className="w-full md:w-100 mt-4 text-lg py-4 rounded-2xl bg-green-600 disabled:cursor-not-allowed text-white hover:bg-green-700" disabled={custStock === 0} onClick={placeOrder}>
-                Pay Now
+            <button className="w-100 md:w-100 mt-4 text-lg py-4 rounded-2xl bg-green-600 disabled:cursor-not-allowed text-white hover:bg-green-700" disabled={custStock <= 0} onClick={placeOrder}>
+                Place Order
             </button>
 
             {
