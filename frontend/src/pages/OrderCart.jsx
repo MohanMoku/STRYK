@@ -139,7 +139,7 @@ export default function OrderCart() {
         return sum + price * qtyArr[index];
     }, 0);
 
-    const deliveryCharge = subtotal > 999 ? 0 : 50;
+    const deliveryCharge = subtotal > 999 ? 0 : 40;
     const grandTotal = subtotal + deliveryCharge;
 
     return (
@@ -280,7 +280,7 @@ export default function OrderCart() {
             </div>
             <button
                 className="w-full md:w-100 mt-4 text-lg py-4 rounded-2xl bg-green-600 disabled:cursor-not-allowed text-white hover:bg-green-700"
-                disabled={qtyArr.reduce((sum, qty) => sum + qty, 0) === 0}
+                disabled={qtyArr.reduce((sum, qty) => sum + qty, 0) === 0 || subtotal === 0}
                 onClick={placeOrder}
             >
                 Pay Now
