@@ -8,15 +8,15 @@ export const google = async (req, res, next) => {
 
     const source = req.get("host") || 'unknown';
 
-    // if (source !== 'stryk.onrender.com') {
+    if (source !== 'stryk.onrender.com') {
 
-    //     console.log('User came from:', source);
-    //     const data = {
-    //         error: "Unauthorized Action"
-    //     }
-    //     res.send(data);
-    //     return;
-    // }
+        console.log('User came from:', source);
+        const data = {
+            error: "Unauthorized Action"
+        }
+        res.send(data);
+        return;
+    }
 
     try {
 
